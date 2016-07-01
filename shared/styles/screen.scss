@@ -1,0 +1,288 @@
+//mixins
+@import 'mixins';
+
+//page parts
+@import 'header';
+@import 'footer';
+
+html {
+  font-size: 11pt;
+}
+input, textarea{
+  font: 1em/1.4 "Raleway","Calibri", "Verdana", sans-serif;
+}
+//proper sizing for EVERYTHING
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #fff;
+  color: #404040;
+  font: 1em/1.4 "Raleway","Georgia";
+  margin: 0;
+}
+// Links.
+a {
+  border-bottom: 1px dotted #1CAE66;
+  color: #1CAE66;
+  cursor: pointer;
+  display: inline-block;
+  padding-bottom: -2px;
+  text-decoration: none;
+  &:hover {
+    border-bottom-style: solid;
+  }
+  &.tag {
+    //border:none;
+    //background: #f5f5f5;
+    //border-radius: 2px;
+    //padding: 5px 1em;
+    //color:#404040;
+    //line-height:1em;
+    //border-bottom: 1px dotted #404040;
+  }
+}
+
+button, a.button{
+  background: rgba(147,128,108,.15);
+  border: none;
+  border-radius: 2px;
+  color: #404040;
+  line-height: 1em;
+  font-size: 0.9em;
+  padding: .5rem 1rem;
+  &.button-green {
+    color: white;
+    background: #46B980;
+
+    &[disabled]{
+      background: #95eac0;
+    }
+  }
+  &.button-blue {
+    color: white;
+    background: #00ACED;
+  }
+
+  i.fa{
+    margin-right:6px;
+  }
+
+  &.button-block{
+    text-align:center;
+    display:block;
+  }
+}
+
+a.take-me-up {
+  position: fixed;
+  top: 5px;
+  right: 10px;
+  opacity: 0;
+  transition: fadeIn ease-in 0.2s;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  &.take-me-up.visible {
+    opacity: 1;
+  }
+}
+
+p {
+  margin: 0 0 1em;
+  text-align: justify;
+}
+
+main {
+  @include wrapper();
+  margin-bottom: 2em;
+  padding:0;
+
+}
+
+p.smaller{
+  font-size:.9em;
+}
+
+h2.latest{
+  margin: 3rem 0 .5rem 0;
+}
+
+.container {
+  nav{
+    border:0px solid black;
+    text-align:left;
+    padding-top:1.5em;
+    float:left;
+    width:200px;
+
+    ul{
+      margin:0;
+      padding:0 0 0 1.5em;
+      //list-style-type: none;
+    }
+  }
+  article{
+    width: 800px;
+    padding: 0 0 0 4em;
+    float:left;
+  }
+
+  @include clearfix;
+  margin: 0 auto;
+  max-width: 100%;
+  //paragraphs
+  p {
+    margin: 0 0 1em;
+    text-align: justify;
+  }
+  li{
+    text-align:justify;
+    padding-bottom:.5rem;
+  }
+  .description {
+    @include clearfix();
+    margin-top: 0em;
+    h1 {
+      font-size: 1.6em;
+      font-weight: bold;
+      margin-bottom: 0.2em;
+      text-align: left;
+      float:left;
+    }
+    .details {
+      float:right;
+      display: block;
+      font-style: italic;
+      font-size: .9em;
+      font-weight: normal;
+      line-height: 2em;
+      margin-top: 1em;
+      text-align: right;
+      padding-top:10px;
+      //color: #555;
+      .date {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+/**
+ * Images.
+ */
+
+img {
+  max-width: 100%;
+}
+.image-description {
+  margin: 0 auto;
+  text-align: center;
+  img {
+    width: 800px;
+    border: 1px dotted #eee;
+    padding: 2px;
+  }
+  .image-description {
+    text-align: center;
+    font-style: italic;
+  }
+}
+.image-gallery {
+  @include clearfix();
+  border-top: 1px dotted #eee;
+  margin-top: 1em;
+  padding-top: 2em;
+  a.image {
+    border: none;
+    float: left;
+    position: relative;
+    width: 150px;
+    &:hover {}
+    &:nth-child(3n+3) {
+      margin-right: 0;
+    }
+    img {
+      border-radius: 0;
+      display: block;
+    }
+    .image-description {
+      background: rgba(0,0,0,0.6);
+      color: #eee;
+      display: inline-block;
+      padding: .4rem 1rem;
+      text-align: center;
+      //position & display
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: none;
+
+      &.visible{
+        display: block;
+      }
+
+      p{
+        margin: 0 0 .5em;
+        &:last-child{
+          margin-bottom:0;
+        }
+      }
+    }
+  }
+}
+
+.post-stub{
+  @include clearfix();
+
+  border-bottom: 1px dotted #eee;
+  background: #fefefe;
+
+  cursor: pointer;
+  display:block;
+  margin: .5rem auto;
+  padding: 0 0 1rem;
+  text-align: left;
+  width: 700px;
+
+
+  h2{
+    font-size: 1.3rem;
+    margin:0 0 .4rem;
+  }
+  .post-stub-body{
+    display:block;
+    .post-stub-thumbnail{
+      float:left;
+      width:200px;
+      margin: 0 20px 0 0;
+    }
+    .post-stub-description{
+      padding: 0 .5rem;
+    }
+  }
+}
+
+.hidden{
+  display:none;
+}
+
+.server-response{
+  font-style: italic;
+  margin:1em 0 0;
+  &.success{
+    color: #3aaf75;
+  }
+  &.error{
+    color: #e24141;
+  }
+}
+
+.contact{
+  input, textarea{
+    margin-bottom: .5rem;
+  }
+}
+
+//responsive features
+@import 'responsive';

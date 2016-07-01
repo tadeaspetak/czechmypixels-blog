@@ -1,0 +1,101 @@
+@import 'mixins';
+.modal-pictures {
+  //position, display & overflow
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 3;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  //overlay
+  background: rgba(0,0,0,.8);
+  //fade out
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.3s, opacity 0.3s ease-in-out;
+  //fade in
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .modal-picture {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    //dimensions & dimension restrictions
+    height: 95%;
+    max-height: 95%;
+    max-width: 95%;
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      position: relative;
+    }
+    //comment
+    .comment {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: none;
+      &.visible{
+        display: block;
+      }
+      //styling
+      background: rgba(0,0,0,.7);
+      color: white;
+      padding: 1em;
+      font-size: 14px;
+      font-style: italic;
+      p {
+        margin: 0 0 0.5rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+/**
+ * Animations.
+ */
+@mixin animation-ready {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+@mixin animation-transition {
+  transition: all 300ms ease-in-out;
+}
+.example-enter {
+  opacity: 0.01;
+  &.entering-as-previous {
+    transform: translate(-300px, 0);
+  }
+  &.entering-as-next {
+    transform: translate(300px, 0);
+  }
+  &.example-enter-active {
+    @include animation-ready();
+    @include animation-transition();
+  }
+}
+.example-leave {
+  @include animation-ready();
+  &.example-leave-active {
+    @include animation-transition();
+    opacity: 0.01;
+    &.leaving-for-previous {
+      transform: translate(300px, 0);
+    }
+    &.leaving-for-next {
+      transform: translate(-300px, 0);
+    }
+  }
+}

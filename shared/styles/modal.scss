@@ -1,0 +1,127 @@
+@import 'mixins';
+$border-radius: 4px;
+body,
+html {
+  &.modal-open {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+}
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,.7);
+  opacity: 1;
+  overflow-y: auto;
+  text-align: center;
+  //fade in
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+  //fade out
+  &.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.2s, opacity 0.2s ease-in-out;
+  }
+  .modal-container {
+    background: white;
+    //border: 1px solid black;
+    border-radius: $border-radius;
+    color:#404040;
+    font-style: normal;
+    margin: 50px auto;
+    width: 500px;
+    text-align: left;
+    box-shadow: 0 0 5px 0 #555;
+
+    .p{
+      text-align:left;
+    }
+    .modal-header {
+      border-bottom: 1px solid #ddd;
+      padding: 1em;
+      background: #eee;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      a.modal-closer {
+        border: 0;
+        color: #aaa;
+        font-style: italic;
+        float: right;
+        &:hover {
+          color: #1CAE66;
+        }
+      }
+      h1 {
+        font-size: 1.1em;
+        line-height: 1em;
+        font-weight: bold;
+        margin: 0;
+        i.fa {
+          position: relative;
+          top: 1px;
+          padding: 0 6px 0 0;
+        }
+      }
+    }
+    .modal-body {
+      padding: 1em 1.5em;
+      text-align: justify;
+      h2 {
+        font-size: 1.1em;
+        i.fa {
+          padding: 0 5px 0 0;
+        }
+      }
+      //TODO: move this to `screen.css` and leave just general stuff here?
+      .person {
+        .person-image {
+          float: left;
+          width: 120px;
+          //margin-right:1rem;
+          img {
+            width: 120px;
+            border-radius: 10px;
+          }
+        }
+        &.person-odd {
+          .person-image {
+            float: right;
+          }
+          .person-description {
+            //margin: 0 150px 0 0;
+          }
+        }
+        .person-description {
+          //margin-left: 150px;
+        }
+      }
+      input, textarea {
+        display: block;
+        width: 100%;
+        padding: 0.5em 1em;
+        border-radius: $border-radius;
+        border: 1px solid #eee;
+      }
+    }
+    .modal-footer {
+      @include clearfix;
+      border-top: 0 solid #eee;
+      text-align: right;
+      padding: 1em 1.5em;
+      button, .button {
+        margin-right: 1em;
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

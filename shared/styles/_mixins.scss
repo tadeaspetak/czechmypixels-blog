@@ -1,0 +1,26 @@
+/**
+ * Clearfix helper to make sure containers are high enough
+ * to contain their children.
+ */
+@mixin clearfix {
+  &:before {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    content: " ";
+    display: table;
+    clear: both;
+  }
+}
+
+/**
+ * Container wrapper - `header`, `footer` and
+ * the `main` are all examples of wrappers.
+ */
+@mixin wrapper {
+  @include clearfix();
+  margin: 0 auto;
+  padding: 0 1em;
+  text-align: center;
+}
