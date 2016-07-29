@@ -53,12 +53,6 @@ export default class Post extends React.Component {
     return this.pictures;
   }
   render() {
-    if(document){
-      let truncated = new Truncate(document.getElementById('#postBody'), {
-        lines: 2
-      });
-    }
-
     return(
       <main>
         <Helmet
