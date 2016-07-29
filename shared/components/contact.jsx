@@ -79,7 +79,7 @@ export default class Contact extends React.Component {
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="contact">
               <div className="modal-header">
-                <h1><i className="fa fa-envelope-o"></i>Send us a message</h1>
+                <h1><i className="fa fa-send"></i>Send us a message</h1>
                 <a className="modal-closer" title="Close me" onClick={this.close.bind(this)}>&times;</a>
               </div>
               <div className="modal-body">
@@ -99,7 +99,7 @@ export default class Contact extends React.Component {
               <div className="modal-footer">
                 <button type="button" onClick={this.close.bind(this)}>Close me</button>
                 <button type="submit" className="button-green" disabled={!this.state.email}>
-                  <i className="fa fa-envelope-o"></i>Send me
+                  <i className="fa fa-send"></i>Send me
                 </button>
               </div>
             </div>

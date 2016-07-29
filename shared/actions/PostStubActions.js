@@ -1,12 +1,15 @@
 import request from 'axios';
+import URL from 'lib/url';
 
 /**
- * Post actions.
+ * Post stub actions.
  */
 
+//get all post stubs
+//TODO: implement pagination & lazy loading
 export function getPostStubs() {
   return {
     type: 'GET_POST_STUBS',
-    promise: request.get('http://trippin-pictures/api/v1/posts')
+    promise: request.get(URL.normalize('api/v1/posts'))
   }
 }

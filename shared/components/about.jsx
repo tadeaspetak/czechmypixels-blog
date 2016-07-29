@@ -1,6 +1,10 @@
 import React from 'react';
 import Modal from './modal.jsx';
 
+/**
+ * Short & sweet about in a modal dialog.
+ */
+
 export default class About extends React.Component {
   constructor(props) {
     super(props);
@@ -26,29 +30,25 @@ export default class About extends React.Component {
           onRequestClose={this.close.bind(this)}>
           <div>
             <div className="modal-header">
-              <h1><i className="fa fa-info-circle"></i>About <em>Trippin&apos; Pictures</em></h1>
+              <h1><i className="fa fa-info"></i>About <strong>Czech My Pixels</strong></h1>
               <a className="modal-closer" title="Close me" onClick={this.close.bind(this)}>&times;</a>
             </div>
             <div className="modal-body">
-              <p>A simple blog documenting some of our travels &apos;round this blue planet.</p>
+              <p>Pictures and words from some of our travels around this blue planet.</p>
 
               <div className="person">
                 <div className="person-image"><mg src="media/01.jpg"/></div>
                 <div className="person-description">
                   <h2><i className="fa fa-camera-retro"></i>Marie</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
+                  <p>... the button presser.</p>
                 </div>
               </div>
 
               <div className="person person-odd">
                 <div className="person-image"><mg src="media/01.jpg"/></div>
                 <div className="person-description">
-                  <h2><i className="fa fa-pencil"></i>Tadeáš</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
+                  <h2><i className="fa fa-paint-brush"></i>Tadeáš</h2>
+                  <p>... the scribbler.</p>
                 </div>
               </div>
             </div>

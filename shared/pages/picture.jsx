@@ -96,7 +96,7 @@ export default class Picture extends React.Component {
   }
   preloadPicture(url){
     return new Promise((resolve, reject) => {
-      var image = new Image();
+      let image = new Image();
       image.src = url;
 
       resolve(image);
@@ -136,8 +136,6 @@ export default class Picture extends React.Component {
     return {container, picture, comment};
   }
   render() {
-    console.log('render');
-
     return(
       <div className={classnames(
           'modal-picture',

@@ -75,10 +75,10 @@ export default class Subscribe extends React.Component {
               <div className="modal-body">
                 <p>
                   Leave your email with us and we will shoot you a message every
-                  time there is a new interesting something on <em>Trippin&apos; Pictures</em>.
+                  time there is a new interesting something on <em>Czech My Pixels</em>.
                 </p>
                 <p>
-                  <strong>No worries, we will never spam you or share your address with anyone!</strong>
+                  <strong>No way on earth would we ever spam someone like you or share your address with anyone!</strong>
                 </p>
                 <input type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)} placeholder="john@doe.com" />
                 <p className={classnames('server-response', this.state.response.type ? this.state.response.type : 'hidden')}>{this.state.response.message}</p>

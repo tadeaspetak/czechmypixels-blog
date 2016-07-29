@@ -1,9 +1,7 @@
 @import 'mixins';
-
 /**
  * Page header.
  */
-
 header {
   @include wrapper();
   background: #eee;
@@ -11,27 +9,28 @@ header {
   padding: 1.2em;
   text-align: left;
   //site header
-  h1 {
+  > h1 {
+    font-family: 'IndieFlower';
     cursor: pointer;
     display: inline-block;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin: 5px 0 0;
-    i {
-      margin-right: 5px;
+    > i.fa {
+      font-size: 1.2rem;
+      margin-right: 10px;
     }
   }
   //buttons
   .controls {
     float: right;
     margin-top: 5px;
-    >span {
+    > span {
       margin-right: 0.5em;
       &:last-of-type {
         margin-right: 0;
       }
     }
-
-    span.search{
+    /*TODO: span.search{
       position:relative;
       i.fa{
         position:absolute;
@@ -47,6 +46,6 @@ header {
         font-size:.9em;
         width:250px;
       }
-    }
+    }*/
   }
 }

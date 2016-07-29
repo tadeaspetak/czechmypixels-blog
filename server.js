@@ -13,6 +13,7 @@ import {Provider} from 'react-redux';
 import promiseMiddleware from 'lib/promiseMiddleware';
 import transit from 'transit-immutable-js';
 import * as reducers from 'reducers';
+import Helmet from 'react-helmet';
 
 /**
  * Server configuration.
@@ -65,21 +66,44 @@ app.use((req, res) => {
 
     function renderView() {
       return new Promise((resolve, reject) => {
-        fs.readFile('./shared/index.html', 'utf8', function(error, html) {
-          if (error) {
-            console.log(error);
-            reject(error);
-          }
+        let app = renderToString((<Provider store={store}><RouterContext {...props}/></Provider>));
+        let head = Helmet.rewind();
 
-          const component = (<Provider store={store}><RouterContext {...props}/></Provider>);
-          const state = store.getState();
+        let html = `
+        <!doctype html>
+        <html>
+          <head>
+            <!-- keep the following three metas as the first ones in the head! -->
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
 
-          resolve(html
-          //initial state
-            .replace('{{state}}', transit.toJSON(state))
-          //app html
-            .replace('{{appHtml}}', renderToString(component)));
-        });
+            <!-- TODO: keywords and description -->
+            <meta name="keywords" content="">
+            <meta name="description" content="">
+            <meta name="author" content="Tadeas Petak <tadeaspetak@gmail.com>">
+
+            ${head.meta.toString()}
+
+            <!-- necessary when dealing with nested routes -->
+            <base href="/">
+
+            <link rel="icon" type="image/png" href="media/favicon.ico">
+            ${head.title.toString()}
+            <link rel="stylesheet" type="text/css" href="screen.css">
+            <script type="application/javascript">
+              window.state = ${transit.toJSON(store.getState())};
+            </script>
+          </head>
+
+          <body>
+            <div id="app"><div>${app}</div></div>
+            <script src="bundle.js"></script>
+          </body>
+        </html>
+        `;
+
+        resolve(html);
       });
     }
 

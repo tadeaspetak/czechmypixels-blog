@@ -13,7 +13,7 @@ export default class Header extends React.Component {
   }
   render() {
     return <header>
-      <h1 onClick={this.handleLogoClick.bind(this)}><i className="fa fa-camera-retro"></i> Trippin&apos; Pictures</h1>
+      <h1 onClick={this.handleLogoClick.bind(this)}><i className="fa fa-camera-retro"></i>Czech My Pixels </h1>
       <div className="controls">
         {/*<Search />*/}
         <About />
