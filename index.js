@@ -6,7 +6,6 @@ require('babel-core/register')({});
 delete process.env.BROWSER;
 
 //start up the server
-var server = require('./server').default;
-server.listen(process.env.PORT || 3002, function () {
+var server = require('./server').default.listen(process.env.PORT || 3002, function () {
   console.log(`Czech My Pixels's Blog listening at http://${server.address().address}:${server.address().port}`);
 });
