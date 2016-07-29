@@ -7,7 +7,6 @@ delete process.env.BROWSER;
 
 //start up the server
 var server = require('./server').default;
-const port = process.env.PORT || 3002;
-server.listen(port, function () {
-  console.log(`Server listening on: ${port}.`);
+server.listen(process.env.PORT || 3002, function () {
+  console.log(`Czech My Pixels's Blog listening at http://${server.address().address}:${server.address().port}`);
 });
