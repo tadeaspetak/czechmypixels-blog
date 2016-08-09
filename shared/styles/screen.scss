@@ -1,17 +1,9 @@
-//mixins
-@import 'mixins'; //page parts
-@import 'header';
-@import 'footer';
-html {
-  font-size: 11pt;
-}
-input,
-textarea {
-  font: 1em/1.4 "Raleway","Calibri", "Verdana", sans-serif;
-}
-//proper sizing for EVERYTHING
+@import 'common';
 * {
   box-sizing: border-box;
+}
+html {
+  font-size: 11pt;
 }
 body {
   background: #fff;
@@ -19,7 +11,23 @@ body {
   font: 1em/1.4 "Raleway","Georgia";
   margin: 0;
 }
-// Links.
+input,
+textarea {
+  font: 1em/1.4 "Raleway","Calibri", "Verdana", sans-serif;
+}
+// text
+p {
+  margin: 0 0 1em;
+  text-align: justify;
+  &.smaller {
+    font-size: 0.9em;
+  }
+}
+// images
+img {
+  max-width: 100%;
+}
+// links
 a {
   border-bottom: 1px dotted #1CAE66;
   color: #1CAE66;
@@ -30,24 +38,17 @@ a {
   &:hover {
     border-bottom-style: solid;
   }
-  &.tag {
-    //border:none;
-    //background: #f5f5f5;
-    //border-radius: 2px;
-    //padding: 5px 1em;
-    //color:#404040;
-    //line-height:1em;
-    //border-bottom: 1px dotted #404040;
-  }
 }
+// buttons
 a.button,
 button {
   background: rgba(147,128,108,.15);
   border: none;
   border-radius: 2px;
   color: #404040;
+  cursor: pointer;
   line-height: 1em;
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 0.5rem 1rem;
   &.button-green {
     color: white;
@@ -60,241 +61,25 @@ button {
     color: white;
     background: #00ACED;
   }
+  &.button-block {
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
+  &[disabled]{
+    cursor: not-allowed;
+  }
+
   i.fa {
     font-size: 0.8em;
     margin-right: 6px;
   }
-  &.button-block {
-    text-align: center;
-    display: block;
-  }
 }
-a.take-me-up {
-  position: fixed;
-  top: 5px;
-  right: 10px;
-  opacity: 0;
-  transition: fadeIn ease-in 0.2s;
-  -moz-transition: opacity 0.2s ease-in-out;
-  -webkit-transition: opacity 0.2s ease-in-out;
-  &.take-me-up.visible {
-    opacity: 1;
-  }
-}
-p {
-  margin: 0 0 1em;
-  text-align: justify;
-}
-main {
-  @include wrapper();
-  margin-bottom: 2em;
-  padding: 0;
-}
-p.smaller {
-  font-size: 0.9em;
-}
-h2.latest {
-  margin: 3rem 0 0.5rem;
-}
-.container {
-  @include clearfix();
-  .article-description {
-    @include clearfix();
-  }
-  nav {
-    border: 0 solid black;
-    text-align: left;
-    padding-top: 1.5em;
-    float: left;
-    width: 200px;
-    ul {
-      margin: 0;
-      padding: 0 0 0 1.5em;
-      //list-style-type: none;
-    }
-  }
-  article {
-    width: 800px;
-    padding: 0 0 0 4em;
-    float: left;
-  }
-  margin: 0 auto;
-  max-width: 100%;
-  //paragraphs
-  p {
-    margin: 0 0 1em;
-    text-align: justify;
-  }
-  li {
-    text-align: justify;
-    padding-bottom: 0.5rem;
-  }
-  .description {
-    @include clearfix();
-    font-family: 'IndieFlower';
-    margin-top: 0;
-    h1 {
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin-bottom: 0.2em;
-      text-align: left;
-      float: left;
-    }
-    .details {
-      font-family: 'IndieFlower';
-      float: right;
-      display: block;
-      font-style: italic;
-      font-size: 1rem;
-      font-weight: normal;
-      line-height: 2em;
-      margin-top: 1em;
-      text-align: right;
-      padding-top: 10px;
-      //color: #555;
-      .date {
-        font-weight: bold;
-      }
-    }
-  }
-}
-/**
- * Images.
- */
-img {
-  max-width: 100%;
-}
-.image-description {
-  margin: 0 auto;
-  text-align: center;
-  img {
-    width: 800px;
-    border: 1px dotted #eee;
-    padding: 2px;
-  }
-  .image-description {
-    text-align: center;
-    font-style: italic;
-  }
-}
-.image-gallery {
-  @include clearfix();
-  border-top: 1px dotted #eee;
-  margin-top: 1em;
-  padding-top: 2em;
-  a.funky-image {
-    border: none;
-    float: left;
-    margin: 0 8px 8px 0;
-    position: relative;
-    &.last {
-      margin-right: 0;
-    }
-    .image-description {
-      background: rgba(0,0,0,0.6);
-      color: #eee;
-      display: inline-block;
-      padding: 0.6rem 1rem;
-      text-align: center;
-      font-size: 0.8rem;
-      //position & display
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      display: none;
-      &.visible {
-        display: block;
-      }
-      p {
-        margin: 0 0 0.5em;
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-  a.image {
-    border: none;
-    float: left;
-    position: relative;
-    width: 150px;
-    &:hover {}
-    &:nth-child(3n+3) {
-      margin-right: 0;
-    }
-    img {
-      border-radius: 0;
-      display: block;
-    }
-    .image-description {
-      background: rgba(0,0,0,0.6);
-      color: #eee;
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      text-align: center;
-      //position & display
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      display: none;
-      &.visible {
-        display: block;
-      }
-      p {
-        margin: 0 0 0.5em;
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-}
-.post-stub {
-  @include clearfix();
-  background: #fefefe;
-  cursor: pointer;
-  display: block;
-  margin: 1.5rem auto;
-  padding: 0 0 1rem;
-  text-align: left;
-  position: relative;
-  color: white;
-  background-size: 1000px 208.33333px;
-  background-repeat: none;
-  width: 1000px;
-  height: 200px;
-  border-radius: 3px;
-  box-shadow: 0 0 4px rgba(0,0,0,.5);
-  .post-stub-contents {
-    position: absolute;
-    right: 0;
-    bottom: 10px;
-    left: 0;
-    background: rgba(0,0,0,.6);
-    padding: 0.5rem 1rem 1rem;
-  }
-  h2 {
-    font-size: 1.1rem;
-    margin: 0 0 0.4rem;
-  }
-  .post-stub-body {
-    display: block;
-    p {
-      margin: 0;
-    }
-    .post-stub-thumbnail {
-      float: left;
-      width: 200px;
-      margin: 0 20px 0 0;
-    }
-    .post-stub-description {}
-  }
-}
+// class added to elements if they are to be hidden
 .hidden {
-  display: none;
+  display: none !important;
 }
+// server responses (typically shown below the related form)
 .server-response {
   font-style: italic;
   margin: 1em 0 0;
@@ -305,11 +90,48 @@ img {
     color: #e24141;
   }
 }
+// contact form
 .contact {
   input,
   textarea {
     margin-bottom: 0.5rem;
   }
 }
-//responsive features
-@import 'responsive';
+//content
+main {
+  @include wrapper();
+  margin-bottom: 2em;
+  padding: 0;
+  .container {
+    padding: 0 5%;
+  }
+}
+/**
+ * Page parts & pages.
+ */
+@import 'header';
+@import 'footer';
+@import 'home';
+@import 'post';
+
+@media (min-width: $screen-medium) {
+  //buttons
+  a.button,
+  button {
+    font-size: 0.9rem;
+  }
+  main {
+    .container {
+      padding: 0;
+      margin: 0 auto;
+      width: 720px;
+    }
+  }
+}
+@media (min-width: $screen-large) {
+  main {
+    .container {
+      width: 1200px;
+    }
+  }
+}

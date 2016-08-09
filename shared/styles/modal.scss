@@ -1,5 +1,5 @@
-@import 'mixins';
-$border-radius: 4px;
+@import 'common'; //variables
+$border-radius: 4px; //prevent document from scrolling when a modal is open
 body,
 html {
   &.modal-open {
@@ -8,12 +8,15 @@ html {
     height: 100%;
   }
 }
+//modal settings
 .modal {
+  //stretch over the entire screen
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  //overlay, scroll vertically if necessary, center
   background: rgba(0,0,0,.7);
   opacity: 1;
   overflow-y: auto;
@@ -33,47 +36,42 @@ html {
   }
   .modal-container {
     background: white;
-    //border: 1px solid black;
     border-radius: $border-radius;
-    color:#404040;
+    box-shadow: 0 0 5px 0 #555;
+    color: #404040;
     font-family: 'Raleway';
     font-size: 1rem;
     font-style: normal;
     margin: 50px auto;
-    width: 500px;
     text-align: left;
-    box-shadow: 0 0 5px 0 #555;
-
-    .p{
-      text-align:left;
-    }
+    width: 90%;
     .modal-header {
       @include clearfix();
-      border-bottom: 1px solid #ddd;
-      padding: 1em;
       background: #eee;
+      border-bottom: 1px solid #ddd;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
-      a.modal-closer {
-        border: 0;
-        color: #aaa;
-        font-style: italic;
-        float: right;
-        line-height:1rem;
-        font-size:1.5rem;
-        &:hover {
-          color: #1CAE66;
-        }
-      }
+      padding: 1em;
       h1 {
-        display:block;
+        display: block;
         font-size: 1rem;
         line-height: 1rem;
         font-weight: bold;
-        float:left;
+        float: left;
         margin: 0;
         i.fa {
-          margin-right:8px;
+          margin-right: 8px;
+        }
+      }
+      a.modal-closer {
+        border: 0;
+        color: #aaa;
+        float: right;
+        font-size: 1.5rem;
+        font-style: italic;
+        line-height: 1rem;
+        &:hover {
+          color: #1CAE66;
         }
       }
     }
@@ -86,48 +84,35 @@ html {
           padding: 0 5px 0 0;
         }
       }
-      //TODO: move this to `screen.css` and leave just general stuff here?
-      .person {
-        .person-image {
-          float: left;
-          width: 120px;
-          //margin-right:1rem;
-          img {
-            width: 120px;
-            border-radius: 10px;
-          }
-        }
-        &.person-odd {
-          .person-image {
-            float: right;
-          }
-          .person-description {
-            //margin: 0 150px 0 0;
-          }
-        }
-        .person-description {
-          //margin-left: 150px;
-        }
-      }
-      input, textarea {
-        display: block;
-        width: 100%;
-        padding: 0.5em 1em;
-        border-radius: $border-radius;
+      input,
+      textarea {
         border: 1px solid #eee;
+        border-radius: $border-radius;
+        display: block;
+        padding: 0.5em 1em;
+        width: 100%;
       }
     }
     .modal-footer {
       @include clearfix;
       border-top: 1px dotted #f0f0f0;
-      text-align: right;
       padding: 1em 1.5em;
-      button, a.button {
+      text-align: right;
+      a.button,
+      button {
         margin-right: 1em;
         &:last-of-type {
           margin-right: 0;
         }
       }
+    }
+  }
+}
+//fix the width on larger screens
+@media (min-width: $screen-medium) {
+  .modal {
+    .modal-container {
+      width: 500px;
     }
   }
 }

@@ -1,0 +1,84 @@
+@import 'common';
+/**
+ * Home page.
+ */
+main.home {
+  .container {
+    .post-stubs {
+      .post-stub {
+        @include clearfix();
+        border-radius: 3px;
+        box-shadow: 0 0 4px rgba(0,0,0,.5);
+        color: white;
+        cursor: pointer;
+        margin: 1.5rem auto;
+        padding: 0 0 1rem;
+        position: relative;
+        text-align: left;
+        // smallest screens
+        background-size: 576px 120px;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 120px;
+        width: 100%;
+        // the name and (potentially) description of an album should be shown on a semi-opaque dark background at the bottom of the stub
+        .post-stub-contents {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background: rgba(0,0,0,.6);
+          padding: 0.5rem 1rem 1rem;
+          h2 {
+            font-size: 1.1rem;
+            margin: 0 0 0.4rem;
+          }
+          .post-stub-body {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(min-width: $screen-small) {
+  main.home {
+    .container {
+      .post-stubs {
+        .post-stub {
+          background-size: 768px 160px;
+          height: 160px;
+          .post-stub-contents {
+            .post-stub-body {
+              display: block;
+              max-height: 40px;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(min-width: $screen-large) {
+  main.home {
+    .container {
+      .post-stubs {
+        .post-stub {
+          background-size: 1200px 250px;
+          height: 250px;
+          padding: 0;
+          .post-stub-contents {
+            bottom: 10px;
+            .post-stub-body {
+              max-height: none;
+              overflow: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}

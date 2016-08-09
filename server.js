@@ -25,12 +25,10 @@ var history = useBasename(createMemoryHistory)({basename: '/'})
 //make sure the path to EVERYTHING is corrrect
 process.chdir(__dirname);
 
-// load `dev` configuration if we are not in the production environment (TODO: try removing the `default` bit below)
-if (process.env.NODE_ENV === 'production') {
-  console.log("PRODUCTION!");
-} else {
+// load `dev` configuration if we are not in the production environment
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+if (process.env.NODE_ENV !== 'production') {
   require('./webpack.dev').default(app);
-  console.log("DEVELOPMENT!");
 }
 
 // static files in `/dist` (TODO: how does this work in the `dev` mode?)
@@ -44,6 +42,9 @@ app.use((req, res) => {
     routes: routes,
     location: history.createLocation(req.url)
   }, (err, redirect, props) => {
+    //set the `host` variable for later successful URL resolution when making calls to the API from the server
+    process.env.HOST = req.get('host');
+
     //an error occured!
     if (err) {
       console.error(err);
@@ -56,19 +57,32 @@ app.use((req, res) => {
     }
 
     /**
-     * Render the view.
+     * Fetch component data.
      *
-     * This function reads the `index.html` from the file system and replaces
-     * the `{{appHtml}}` bit in it with the page renedered. It's isomorphic
-     * (or universal?) as rendering happens on the server and the client receives
-     * full HTML for the current path.
+     * Traverse through the component tree for the current view and load
+     * data by `dispatching` methods in the `needs` property of the component
+     * before returning the HTML of the view. This way, the returned response
+     * contains HTML equivalent to the one rendered on the client, making
+     * it truly isomorphic.
+     */
+
+    function fetchComponentData(dispatch, components, params) {
+      const needs = components.reduce((previous, component) => {
+        return (component.needs || []).map(need => need.bind(component))
+          .concat(((component.WrappedComponent ? component.WrappedComponent.needs : []) || []).map(need => need.bind(component)))
+          .concat(previous);
+        }, []);
+      return Promise.all(needs.map(need => dispatch(need(params))));
+    }
+
+    /**
+     * Render the view.
      */
 
     function renderView() {
       return new Promise((resolve, reject) => {
         let app = renderToString((<Provider store={store}><RouterContext {...props}/></Provider>));
         let head = Helmet.rewind();
-
         let html = `
         <!doctype html>
         <html>
@@ -95,7 +109,6 @@ app.use((req, res) => {
               window.state = ${transit.toJSON(store.getState())};
             </script>
           </head>
-
           <body>
             <div id="app"><div>${app}</div></div>
             <script src="bundle.js"></script>
@@ -107,6 +120,7 @@ app.use((req, res) => {
       });
     }
 
+    //fetch data, render & return the source
     fetchComponentData(store.dispatch, props.components, props.params)
         .then(renderView)
         .then(html => res.type('html').send(html))
@@ -114,14 +128,22 @@ app.use((req, res) => {
   });
 });
 
-function fetchComponentData(dispatch, components, params) {
-  const needs = components.reduce((previous, component) => {
-    return (component.needs || []).map(need => need.bind(component))
-      .concat(((component.WrappedComponent ? component.WrappedComponent.needs : []) || []).map(need => need.bind(component)))
-      .concat(previous);
-    }, []);
-
-    return Promise.all(needs.map(need => dispatch(need(params))));
-}
-
 export default app;
+
+/*
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analytics.czechmypixels/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//analytics.czechmypixels/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+ */

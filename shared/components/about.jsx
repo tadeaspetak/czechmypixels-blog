@@ -12,9 +12,6 @@ export default class About extends React.Component {
       isOpen: false
     };
   }
-  open() {
-    this.setState({isOpen: true});
-  }
   close() {
     this.setState({isOpen: false})
   }
@@ -23,8 +20,8 @@ export default class About extends React.Component {
       <span>
         <a
           className="button"
-          onClick={this.open.bind(this)}>
-          <i className="fa fa-info"></i>About</a>
+          onClick={() => this.setState({isOpen: true})}>
+          <i className="fa fa-info" />About</a>
         <Modal
           isOpen={this.state.isOpen}
           onRequestClose={this.close.bind(this)}>
@@ -34,10 +31,9 @@ export default class About extends React.Component {
               <a className="modal-closer" title="Close me" onClick={this.close.bind(this)}>&times;</a>
             </div>
             <div className="modal-body">
-              <p>Pictures and words from some of our travels around this blue planet.</p>
+              <p>Pictures and scribbles from some of our travels &apos'round this blue planet.</p>
 
               <div className="person">
-                <div className="person-image"><mg src="media/01.jpg"/></div>
                 <div className="person-description">
                   <h2><i className="fa fa-camera-retro"></i>Marie</h2>
                   <p>... the button presser.</p>
@@ -45,7 +41,6 @@ export default class About extends React.Component {
               </div>
 
               <div className="person person-odd">
-                <div className="person-image"><mg src="media/01.jpg"/></div>
                 <div className="person-description">
                   <h2><i className="fa fa-paint-brush"></i>Tadeáš</h2>
                   <p>... the scribbler.</p>

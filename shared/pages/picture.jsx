@@ -1,17 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {needs} from 'lib/needs';
 import * as PostActions from 'actions/PostActions';
 import { Map } from 'immutable';
 import classnames from 'classnames';
 import nprogress from 'nprogress';
-
+import Helmet from 'react-helmet';
 /**
  * Picture detail.
  */
 
-@connect(state => ({posts: state.posts}))
-//@needs([params => PostActions.getPost(params.slug)])
+@connect(state => ({posts: state.posts}), null, null, {
+  withRef: true
+})
 export default class Picture extends React.Component {
   //router is required for this component
   static contextTypes = {
@@ -126,7 +126,7 @@ export default class Picture extends React.Component {
     container.style.height = `${picture.offsetHeight}px`;
 
     //picture comment
-    comment.className = classnames('comment', {visible: this.getPicture().html});
+    comment.className = classnames('comment', {visible: this.getPicture().description});
   }
   getDOMElements(){
     let container = document.getElementsByClassName('modal-picture')[0];
@@ -136,17 +136,27 @@ export default class Picture extends React.Component {
     return {container, picture, comment};
   }
   render() {
-    return(
-      <div className={classnames(
-          'modal-picture',
-          {'leaving-for-previous': this.state.leavingForPrevious},
-          {'leaving-for-next': this.state.leavingForNext},
-          {'entering-as-previous': this.props.posts.get('change-picture-direction') === 'previous'},
-          {'entering-as-next': this.props.posts.get('change-picture-direction') === 'next'}
-      )}>
-        <img src={this.getPicture().content} />
-        <div className={classnames('comment')} dangerouslySetInnerHTML={{__html: this.getPicture().html}}></div>
-      </div>
-    )
+    //TODO: resolve image URL in og tag to absolute...
+    let title = `${this.getPicture().name} | Czech My Pixels`;
+    return(<div
+      className={classnames(
+            'modal-picture',
+            {'leaving-for-previous': this.state.leavingForPrevious},
+            {'leaving-for-next': this.state.leavingForNext},
+            {'entering-as-previous': this.props.posts.get('change-picture-direction') === 'previous'},
+            {'entering-as-next': this.props.posts.get('change-picture-direction') === 'next'}
+        )}>
+          <img src={this.getPicture().content} />
+          <div className={classnames('comment')}>{this.getPicture().description}</div>
+
+          <Helmet
+            title={title}
+            meta={[
+              {property: "og:type", content: "article"},
+              {property: "og:title", content: title},
+              {property: "og:description", content: this.getPicture().description},
+              {property: "og:image", content: ""}
+            ]}/>
+        </div>);
   }
 }

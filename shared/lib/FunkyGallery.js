@@ -33,7 +33,8 @@ let FunkyGallery = {
       height,
       //real width of the resized image (useful e.g. when setting "background-size")
       resizedWidth,
-      //horiontal shift required to center the image in its continer (useful e.g. when setting "background-position-x")
+      // horizontal shift required to center the image in its continer
+      // (useful e.g. when setting "background-position-x", if not using background-position:center for some reason)
       shiftBy: (resizedWidth - cropWidth) / 2}
   },
   /**
@@ -71,16 +72,16 @@ let FunkyGallery = {
       }
       return false;
     });
-    return {row, widths, widthSum, potentials, potentialSum, rowHeight};
+    return {row, widths, widthSum, potentials, potentialSum, rowHeight, rowWidth};
   },
   /**
    * Arrange elements into rows.
    * (Recursively calls self until there are no more elements to be processed.)
    */
   arrange(elements, settings, rows) {
-    let {row, widths, widthSum, potentials, potentialSum, rowHeight} = this.pickRow(elements, settings);
+    let {row, widths, widthSum, potentials, potentialSum, rowHeight, rowWidth} = this.pickRow(elements, settings);
     let gaps = (_.size(row) - 1) * settings.gap;
-    let difference = widthSum - settings.rowWidth + gaps;
+    let difference = widthSum - rowWidth + gaps;
 
     //a complete row
     if (difference > 0) {

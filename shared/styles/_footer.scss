@@ -1,9 +1,7 @@
-@import 'mixins';
-
+@import 'common';
 /**
  * Page footer.
  */
-
 footer {
   @include wrapper();
   background: #404040;
@@ -12,8 +10,8 @@ footer {
   .container {
     font-style: italic;
     line-height: 1.6em;
-    text-align:center;
-    >a {
+    text-align: center;
+    > a {
       border-bottom: 1px dashed rgba(229, 229, 229,.5);
       color: #e5e5e5;
       text-decoration: none;

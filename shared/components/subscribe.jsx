@@ -25,14 +25,8 @@ export default class Subscribe extends React.Component {
       isOpen: false
     };
   }
-  open() {
-    this.setState({isOpen: true});
-  }
   close() {
     this.setState(this.getInitState())
-  }
-  handleEmailChange(e){
-    this.setState({email: e.target.value});
   }
   handleSubmit(e){
     e.preventDefault();
@@ -62,7 +56,7 @@ export default class Subscribe extends React.Component {
   render() {
     return (
       <span>
-        <a className="button button-green" onClick={this.open.bind(this)}>
+        <a className="button button-green" onClick={() => this.setState({isOpen: true})}>
           <i className="fa fa-rss"></i>Subscribe
         </a>
         <Modal isOpen={this.state.isOpen} onRequestClose={this.close.bind(this)}>
@@ -80,7 +74,7 @@ export default class Subscribe extends React.Component {
                 <p>
                   <strong>No way on earth would we ever spam someone like you or share your address with anyone!</strong>
                 </p>
-                <input type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)} placeholder="john@doe.com" />
+                <input type="email" value={this.state.email} onChange={e => this.setState({email: e.target.value})} placeholder="john@doe.com" />
                 <p className={classnames('server-response', this.state.response.type ? this.state.response.type : 'hidden')}>{this.state.response.message}</p>
               </div>
               <div className="modal-footer">

@@ -51,7 +51,7 @@ export default function(app) {
   //serve the files emitted from webpack over a connect server (nothing is written to the disk)
   app.use(webpackDevMiddleware(compiler, {
     // display all info to console (not only warnings and errors)
-    noInfo: false
+    noInfo: true
   }));
   //allow webpack hot reloading
   app.use(webpackHotMiddleware(compiler));

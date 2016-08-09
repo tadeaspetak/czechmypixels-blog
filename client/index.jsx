@@ -36,8 +36,12 @@ const state = transit.fromJSON(JSON.stringify(window.state));
 const reducer = combineReducers(reducers);
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, state);
 
+let onUpdate = () => {
+  //console.log(document.title, window.location.pathname);
+}
+
 //render the app into the `#app` element
 render(
   <Provider store={store}>
-    <Router children={routes} history={browserHistory}/>
+    <Router children={routes} history={browserHistory} onUpdate={onUpdate}/>
   </Provider>, document.getElementById('app'));

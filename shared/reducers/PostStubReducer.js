@@ -7,10 +7,14 @@ import { Map } from 'immutable';
 const handlers = new Map()
   //get posts
   .set('GET_POST_STUBS', (state, action) => {
-    action.res.data.posts.forEach(post => {
-      state = state.set(post.slug, post);
+    state = state.set('total', action.res.data.total);
+
+    let stubs = state.get('stubs') || new Map();
+    action.res.data.stubs.forEach(stub => {
+      stubs = stubs.set(stub.slug, stub);
     });
-    return state;
+
+    return state.set('stubs', stubs);
   });
 
 const empty = new Map();

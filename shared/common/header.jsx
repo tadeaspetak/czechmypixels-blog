@@ -8,12 +8,12 @@ import Search from '../components/search.jsx';
  */
 
 export default class Header extends React.Component {
-  handleLogoClick(){
-    this.context.router.push('/');
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
   }
   render() {
     return <header>
-      <h1 onClick={this.handleLogoClick.bind(this)}><i className="fa fa-camera-retro"></i>Czech My Pixels </h1>
+      <h1 className="site-header" onClick={() => this.context.router.push('/')}><i className="fa fa-camera-retro" />Czech My Pixels</h1>
       <div className="controls">
         {/*<Search />*/}
         <About />
@@ -22,9 +22,4 @@ export default class Header extends React.Component {
       </div>
     </header>
   }
-}
-
-//router context
-Header.contextTypes = {
-  router: React.PropTypes.object.isRequired
 }

@@ -27,20 +27,8 @@ export default class Contact extends React.Component {
       isOpen: false
     };
   }
-  open() {
-    this.setState({isOpen: true});
-  }
   close() {
     this.setState(this.getInitState())
-  }
-  handleNameChange(e){
-    this.setState({name: e.target.value});
-  }
-  handleEmailChange(e){
-    this.setState({email: e.target.value});
-  }
-  handleMessageChange(e){
-    this.setState({message: e.target.value});
   }
   handleSubmit(e){
     e.preventDefault();
@@ -74,7 +62,7 @@ export default class Contact extends React.Component {
   render() {
     return (
       <span>
-        <a onClick={this.open.bind(this)}>Marie Malá</a>
+        <a onClick={() => this.setState({isOpen: true})}>Marie Malá</a>
         <Modal isOpen={this.state.isOpen} onRequestClose={this.close.bind(this)}>
           <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="contact">
@@ -85,13 +73,13 @@ export default class Contact extends React.Component {
               <div className="modal-body">
                 <div>
                   <div className="form-group">
-                    <input type="text" id="contact-name" value={this.state.name} onChange={this.handleNameChange.bind(this)} placeholder="Name" required />
+                    <input type="text" id="contact-name" value={this.state.name} onChange={e => this.setState({name: e.target.value})} placeholder="Name" required />
                   </div>
                   <div className="form-group">
-                    <input type="email" id="contact-email" value={this.state.email} onChange={this.handleEmailChange.bind(this)} placeholder="E-mail" required />
+                    <input type="email" id="contact-email" value={this.state.email} onChange={e => this.setState({email: e.target.value})} placeholder="E-mail" required />
                   </div>
                   <div className="form-group">
-                    <textarea rows="5" value={this.state.message} onChange={this.handleMessageChange.bind(this)} placeholder="Message"></textarea>
+                    <textarea rows="5" value={this.state.message} onChange={e => this.setState({message: e.target.value})} placeholder="Message"></textarea>
                   </div>
                   <p className={classnames('server-response', this.state.response.type ? this.state.response.type : 'hidden')}>{this.state.response.message}</p>
                 </div>

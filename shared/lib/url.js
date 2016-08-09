@@ -1,17 +1,9 @@
 const _ = require('lodash');
-const os = require('os');
 
 let URL = {
+  //prefix the URL with a host if this runs on the server (necessary as relative URL can naturally not suffice)
   normalize(url) {
-    //for browser, just return the URL as it is
-    if (process.env.BROWSER) return url;
-
-    //for server, prefix it properly
-    if (os.hostname().toLowerCase().startsWith('tadeass')) {
-      return `http://czechmypixels/${url}`;
-    } else {
-      return `http://czechmypixels.com/${url}`;
-    }
+    return process.env.BROWSER ? url : `http://${process.env.HOST}/${url}`;
   }
 }
 

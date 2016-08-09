@@ -1,5 +1,5 @@
 /**
- * Decorator adding necessary resources to a component.
+ * Decorator marking necessary resources for a component.
  */
 
 export function needs(needs) {
