@@ -57,9 +57,6 @@ main.post {
         }
       }
     }
-    nav {
-      display: none;
-    }
     //image gallery
     .image-gallery {
       @include clearfix();
@@ -115,7 +112,6 @@ main.post {
     }
   }
 }
-
 @media(min-width: $screen-medium) {
   main.post {
     //banner
@@ -125,17 +121,31 @@ main.post {
     img.banner {
       display: block;
     }
-    .container {
-    }
+    .container {}
   }
 }
 @media(min-width: $screen-large) {
   main.post {
     .container {
+      position: relative;
+      nav {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        width: 200px;
+        text-align: left;
+        h2.latest {
+          margin: 3rem 0 0.5rem;
+        }
+        ul {
+          margin: 0;
+          padding: 0 0 0 1.5em;
+          //list-style-type: none;
+        }
+      }
       article.post {
-        margin: 0 auto;
-        width: 800px;
-
+        float: left;
+        margin: 0 0 0 250px;
         /*h1.post-heading {
           float: left;
           font-size: 1.6rem;

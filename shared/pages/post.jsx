@@ -57,14 +57,23 @@ export default class Post extends React.Component {
       isShownFull: false,
       isReadOnNecessary: false,
       isFunky: false,
-      pictures: []
+      pictures: [],
+      nav: {position: 'absolute', top:'20px', left: '0px'}
     };
-    this.onResize = this.onResize.bind(this);
     this.onKeyup = this.onKeyup.bind(this);
+    this.onResize = this.onResize.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
   handlePicutreClick(picture){
     this.props.dispatch(PostActions.changePicture('none'));
     this.context.router.push(`post/${this.getPost().slug}/${picture.name}`);
+  }
+  onKeyup(e){
+    if(e.which === 65){
+      this.handleSwipe('left');
+    } else if (e.which === 83){
+      this.handleSwipe('right');
+    }
   }
   onResize(){
     // this is just a fake resize, mostl likely on a mobile device where resize is called
@@ -77,11 +86,50 @@ export default class Post extends React.Component {
     let current = this.getSize();
     if(current !== this.size || utils.getViewport().width < 768) this.repaint(current);
   }
-  onKeyup(e){
-    if(e.which === 65){
-      this.handleSwipe('left');
-    } else if (e.which === 83){
-      this.handleSwipe('right');
+  onScroll(){
+    let nav = this.getNav();
+    if(!_.isEqual(this.state.nav, nav)){
+      this.setState({nav: nav});
+    }
+  }
+  getNav(){
+    let contents = document.getElementById('post-contents');
+    let contentsCoords = this.getCoords(contents);
+    let scroll = this.getScroll();
+
+    let navigation = document.getElementById('post-navigation');
+    //console.log(contents.offsetHeight, navigation.offsetHeight);
+
+    if(contentsCoords.top > scroll.top){
+      return {position: 'absolute', top: `30px`, left: `0px`};
+    } else if ((contentsCoords.bottom - navigation.offsetHeight - 30) < scroll.top){
+      return {position: 'absolute', top: `${contents.offsetHeight - navigation.offsetHeight - 20}px`, left: `0px`};
+    } else {
+      return {position: `fixed`, top: `30px`, left: `${this.getCoords(document.getElementById('post-container')).left}px`};
+    }
+  }
+  getCoords(element) {
+    let box = element.getBoundingClientRect();
+    let scroll = this.getScroll();
+    let client = this.getClient();
+
+    return {
+      top: Math.round(box.top +  scroll.top - client.top),
+      right: Math.round(box.right +  scroll.left - client.left),
+      bottom: Math.round(box.bottom +  scroll.top - client.top),
+      left: Math.round(box.left + scroll.left - client.left)
+    };
+  }
+  getClient(){
+    return {
+      top: document.documentElement.clientTop || document.body.clientTop || 0,
+      left: document.documentElement.clientLeft || document.body.clientLeft || 0
+    }
+  }
+  getScroll(){
+    return {
+      top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop,
+      left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft
     }
   }
   handleSwipe(direction){
@@ -138,12 +186,14 @@ export default class Post extends React.Component {
     }
   }
   componentDidMount(){
-    window.addEventListener('resize', this.onResize);
     window.addEventListener('keyup', this.onKeyup);
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('scroll', this.onScroll);
   }
   componentWillUnmount(){
-    window.removeEventListener('resize', this.onResize);
     window.removeEventListener('keyup', this.onKeyup);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('scroll', this.onScroll);
   }
   componentWillReceiveProps(next){
     if(!this.getPictures() || this.getPictures() !== this.getPictures(next)){
@@ -217,8 +267,8 @@ export default class Post extends React.Component {
         <div className="banner" style={{backgroundImage: this.getPost().banner ? `url("${this.getPost().banner.banner}")` : false}} />
         <img className="banner" alt="" src={this.getPost().banner ? this.getPost().banner.banner : ''} />
         {/* page content => post */}
-        <div className="container">
-          <article className="post">
+        <div id="post-container" className="container">
+          <article id="post-contents" className="post">
             {/* post meta*/}
             <div className="post-meta">
               <h1 className="post-heading">{this.getPost().title}</h1>
@@ -236,25 +286,29 @@ export default class Post extends React.Component {
           </article>
           {/* image gallery */}
           <div className="image-gallery">{this.state.isFunky ? this.getFunky() : this.getPlain()}</div>
+          {/* post navigation */}
+          <nav id="post-navigation" style={{
+              position: this.state.nav.position,
+              top: this.state.nav.top,
+              left: this.state.nav.left
+            }}>
+            <p className="smaller">
+              <em>You are reading part #3 in the Southeast Asia 2015/2016 trip.
+                There are <strong>13</strong> posts in total from this trip, make
+                sure to check them out all!
+              </em>
+            </p>
+            <a className="button button-block button-green"><i className="fa fa-map-o"></i>All posts from the trip</a>
+
+            <h2 className="latest">Latest posts</h2>
+            <ul className="latest">
+              <li><a href="#">Hué (16.12.2015)</a></li>
+              <li><a href="#">Sa Pa (23.12.2015)</a></li>
+              <li><a href="#">Ha Noi (1.1.2016)</a></li>
+            </ul>
+          </nav>
         </div>
       </main>
     )
   }
 }
-/* navigation
-<nav>
-  <p className="smaller">
-    <em>You are reading part #3 in the Southeast Asia 2015/2016 trip.
-      There are <strong>13</strong> posts in total from this trip, make
-      sure to check them out all!
-    </em>
-  </p>
-  <a className="button button-block button-green"><i className="fa fa-map-o"></i>All posts from the trip</a>
-
-  <h2 className="latest">Latest posts</h2>
-  <ul className="latest">
-    <li><a href="#">Hué (16.12.2015)</a></li>
-    <li><a href="#">Sa Pa (23.12.2015)</a></li>
-    <li><a href="#">Ha Noi (1.1.2016)</a></li>
-  </ul>
-</nav> */

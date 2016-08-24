@@ -34,6 +34,7 @@ header {
     }
   }
 }
+//starting from a small screen, display all header elements on a single row
 @media(min-width: $screen-small) {
   header {
     padding: 0.6rem 1.2rem 0.5rem;

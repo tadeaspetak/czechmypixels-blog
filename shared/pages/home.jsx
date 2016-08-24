@@ -53,7 +53,7 @@ export default class Home extends React.Component {
           <div className="post-stubs">{this.getStubs().valueSeq().map(stub => <PostStub key={stub.id} stub={stub}/>)}</div>
           <button
             className={classnames('load-more', 'button-block', 'button-green', {hidden: this.getStubs().size >= this.getTotal()})}
-            onClick={this.handleLoadMore.bind(this)} disabled={this.state.loadingMore}><i className="fa fa-angle-double-down"></i>Show Me More</button>
+            onClick={this.handleLoadMore.bind(this)} disabled={this.state.loadingMore}><i className="fa fa-angle-double-down"></i>Show Me a Few More</button>
         </div>
       </main>);
   }

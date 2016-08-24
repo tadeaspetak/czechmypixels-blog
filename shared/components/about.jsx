@@ -31,7 +31,7 @@ export default class About extends React.Component {
               <a className="modal-closer" title="Close me" onClick={this.close.bind(this)}>&times;</a>
             </div>
             <div className="modal-body">
-              <p>Pictures and scribbles from some of our travels &apos'round this blue planet.</p>
+              <p>Pictures and scribbles from some of our travels &apos;round this blue planet.</p>
 
               <div className="person">
                 <div className="person-description">

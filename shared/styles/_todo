@@ -80,21 +80,4 @@ a.image {
     font-size:.9em;
     width:250px;
   }
-
-  //left column
-  nav {
-    border: 0 solid black;
-    text-align: left;
-    padding-top: 1.5em;
-    float: left;
-    width: 200px;
-    h2.latest {
-      margin: 3rem 0 0.5rem;
-    }
-    ul {
-      margin: 0;
-      padding: 0 0 0 1.5em;
-      //list-style-type: none;
-    }
-  }
 }*/

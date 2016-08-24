@@ -5,7 +5,7 @@ import { Map } from 'immutable';
  */
 
 const handlers = new Map()
-  //get posts
+  //get post stubs
   .set('GET_POST_STUBS', (state, action) => {
     state = state.set('total', action.res.data.total);
 

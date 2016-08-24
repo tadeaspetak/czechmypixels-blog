@@ -6,7 +6,7 @@ import Header from './common/header.jsx';
 import Footer from './common/footer.jsx';
 
 /**
- * Main class of the app.
+ * Gateway into the app.
  */
 
 export default class App extends React.Component {
