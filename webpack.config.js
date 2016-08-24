@@ -58,10 +58,11 @@ var config = {
   plugins: [
     //combine all the .css and .sass files into `screen.css`
     new ExtractTextPlugin("screen.css"),
-    //set the BROWSER variable to true (useful for determining context in the shared code base)
     new webpack.DefinePlugin({
       "process.env": {
+        //set `NODE_ENV` variable equal to the `process.env.NODE_ENV` variable (forces React to use production version)
         NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : 'development'),
+        //set the `BROWSER` variable to true (useful for determining context in the shared code base)
         BROWSER: JSON.stringify(true)
       }
     })
