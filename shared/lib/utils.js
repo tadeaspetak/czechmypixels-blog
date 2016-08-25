@@ -1,4 +1,4 @@
-let utils = {
+let Utils = {
   getViewport() {
     return {
       width: process.env.BROWSER ? window.innerWidth : 0,
@@ -14,7 +14,14 @@ let utils = {
   truncate(string, max) {
     let trimmed = string.substring(0, max);
     return trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')));
+  },
+  loadImage(url){
+    return new Promise((resolve, reject) => {
+      let image = new Image();
+      image.onload = () => resolve(image);
+      image.src = url;
+    });
   }
 };
 
-module.exports = utils;
+module.exports = Utils;

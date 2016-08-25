@@ -5,6 +5,8 @@ import { Map } from 'immutable';
 import classnames from 'classnames';
 import nprogress from 'nprogress';
 import Helmet from 'react-helmet';
+import Utils from 'lib/utils';
+
 /**
  * Picture detail.
  */
@@ -68,7 +70,7 @@ export default class Picture extends React.Component {
     let next = this.getPictures().length <= this.index + 1 ? false : this.getPictures()[this.index + 1];
     if(next){
       nprogress.start();
-      this.preloadPicture(next.content).then(image => {
+      Utils.loadImage(next.content).then(image => {
         this.props.dispatch(PostActions.changePicture('next'));
         this.setState({leavingForNext: true});
         this.context.router.push(`post/${this.props.params.slug}/${next.name}`);
@@ -83,7 +85,7 @@ export default class Picture extends React.Component {
     let previous = this.index - 1 < 0 ? false : this.getPictures()[this.index - 1];
     if(previous){
       nprogress.start();
-      this.preloadPicture(previous.content).then(image => {
+      Utils.loadImage(previous.content).then(image => {
         this.props.dispatch(PostActions.changePicture('previous'));
         this.setState({leavingForPrevious: true});
         this.context.router.push(`post/${this.props.params.slug}/${previous.name}`);
@@ -93,13 +95,6 @@ export default class Picture extends React.Component {
     } else {
       this.handleOverlayClick();
     }
-  }
-  preloadPicture(url){
-    return new Promise((resolve, reject) => {
-      let image = new Image();
-      image.src = url;
-      resolve(image);
-    });
   }
   handleOverlayClick(){
     this.context.router.push(`post/${this.props.params.slug}`);

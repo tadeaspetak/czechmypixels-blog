@@ -11,7 +11,7 @@ import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import FunkyGallery from 'lib/FunkyGallery';
 import Swipeable from 'react-swipeable';
-import utils from 'lib/utils';
+import Utils from 'lib/utils';
 import nprogress from 'nprogress';
 
 /**
@@ -58,7 +58,7 @@ export default class Post extends React.Component {
     rowWidth: 1200
   }]
   static getAvailableWidth = () => {
-    return utils.getDimensions().width * .9;
+    return Utils.getDimensions().width * .9;
   }
   constructor(props){
     super(props);
@@ -76,9 +76,10 @@ export default class Post extends React.Component {
     this.onScroll = this.onScroll.bind(this);
   }
   handlePicutreClick(picture){
-    this.props.dispatch(PostActions.changePicture('none'));
-    this.context.router.push(`post/${this.getPost().slug}/${picture.name}`);
-    //TODO: preload the image
+    Utils.loadImage(picture.content).then(() => {
+      this.props.dispatch(PostActions.changePicture('none'));
+      this.context.router.push(`post/${this.getPost().slug}/${picture.name}`);
+    });
   }
   onKeyup(e){
     if(e.which === 65){
@@ -90,13 +91,13 @@ export default class Post extends React.Component {
   onResize(){
     // this is just a fake resize, mostl likely on a mobile device where resize is called
     // on scroll since scrollbar is added and removed from the window...
-    if(this.width === utils.getDimensions().width){
+    if(this.width === Utils.getDimensions().width){
       return;
     }
 
-    this.width = utils.getDimensions().width;
+    this.width = Utils.getDimensions().width;
     let current = this.getSize();
-    if(current !== this.size || utils.getViewport().width < 768) this.repaint(current);
+    if(current !== this.size || Utils.getViewport().width < 768) this.repaint(current);
   }
   onScroll(){
     let nav = this.getNav();
@@ -184,7 +185,7 @@ export default class Post extends React.Component {
     this.resolveReadOn();
   }
   getSize(){
-    let width = utils.getViewport().width;
+    let width = Utils.getViewport().width;
     return Post.sizes.filter(size => (!size.min || size.min <= width) && (!size.max || size.max > width))[0];
   }
   getPost(){
@@ -230,8 +231,8 @@ export default class Post extends React.Component {
     this.resolveReadOn();
 
     //if scroll bar has been added due to content changes, pictures need to be re-rendered
-    if(!this.width || utils.getDimensions().width < this.width){
-      this.width = utils.getDimensions().width;
+    if(!this.width || Utils.getDimensions().width < this.width){
+      this.width = Utils.getDimensions().width;
       this.repaint();
     }
   }
