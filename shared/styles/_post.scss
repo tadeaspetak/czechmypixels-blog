@@ -12,6 +12,9 @@ main.post {
     display: none;
   }
   .container {
+    nav{
+      display:none;
+    }
     //post
     article.post {
       .post-meta {
@@ -129,6 +132,7 @@ main.post {
     .container {
       position: relative;
       nav {
+        display:block;
         position: absolute;
         top: 30px;
         left: 0;
