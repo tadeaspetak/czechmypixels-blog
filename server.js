@@ -68,11 +68,11 @@ app.use((req, res) => {
 
     function fetchComponentData(dispatch, components, params) {
       const needs = components.reduce((previous, component) => {
-        return (component.needs || []).map(need => need.bind(component))
-          .concat(((component.WrappedComponent ? component.WrappedComponent.needs : []) || []).map(need => need.bind(component)))
+        return (component.needs || []).map(need => need(props))
+          .concat(((component.WrappedComponent ? component.WrappedComponent.needs : []) || []).map(need => need(props)))
           .concat(previous);
         }, []);
-      return Promise.all(needs.map(need => dispatch(need(params))));
+      return Promise.all(needs.map(need => dispatch(need)));
     }
 
     /**
@@ -124,7 +124,10 @@ app.use((req, res) => {
     fetchComponentData(store.dispatch, props.components, props.params)
         .then(renderView)
         .then(html => res.type('html').send(html))
-        .catch(error => res.end(error.message));
+        .catch(error => {
+          console.log(error);
+          res.end(error.message)
+        });
   });
 });
 

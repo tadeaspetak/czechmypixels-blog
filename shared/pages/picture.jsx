@@ -98,7 +98,6 @@ export default class Picture extends React.Component {
     return new Promise((resolve, reject) => {
       let image = new Image();
       image.src = url;
-
       resolve(image);
     });
   }

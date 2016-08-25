@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /**
  * Decorator marking necessary resources for a component.
  */
@@ -14,7 +16,11 @@ export function needs(needs) {
       if (window.state) {
         delete window.state;
       } else {
-        needs.forEach(need => this.props.dispatch(need.bind(this)(this.props.params)));
+        needs.forEach(need => {
+          //TODO: binding `this` does not seem to work... is it because of the decorator stuff? but why would it?!
+          let result = need(this.props);
+          return result ? this.props.dispatch(result) : false;
+        });
       }
 
       //call the original `componentDidMount` function (if there is one)

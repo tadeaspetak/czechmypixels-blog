@@ -12,13 +12,22 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import FunkyGallery from 'lib/FunkyGallery';
 import Swipeable from 'react-swipeable';
 import utils from 'lib/utils';
+import nprogress from 'nprogress';
 
 /**
  * Post detail.
  */
 
 @connect(state => ({posts: state.posts}))
-@needs([params => PostActions.getPost(params.slug)])
+@needs([props => {
+  //post might have been preloaded from `home` -> in that case, skip loading it again
+  let post = props.posts ? props.posts.get(props.params.slug) : false;
+  if(post && post.preloaded){
+      props.dispatch(PostActions.setPreloaded(props.params.slug, false));
+      return;
+  }
+  return PostActions.getPost(props.params.slug);
+}])
 export default class Post extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
@@ -60,6 +69,8 @@ export default class Post extends React.Component {
       pictures: [],
       nav: {position: 'absolute', top:'20px', left: '0px'}
     };
+
+    //event handlers (bind them to `this`)
     this.onKeyup = this.onKeyup.bind(this);
     this.onResize = this.onResize.bind(this);
     this.onScroll = this.onScroll.bind(this);
@@ -67,6 +78,7 @@ export default class Post extends React.Component {
   handlePicutreClick(picture){
     this.props.dispatch(PostActions.changePicture('none'));
     this.context.router.push(`post/${this.getPost().slug}/${picture.name}`);
+    //TODO: preload the image
   }
   onKeyup(e){
     if(e.which === 65){
@@ -142,13 +154,21 @@ export default class Post extends React.Component {
       }
     }
   }
+  //as only parameter in the route is changing, the loading needs to be handled manually
+  handleGotoPost(post){
+    nprogress.start();
+    this.props.dispatch(PostActions.getPost(post.slug)).then(() => {
+      this.context.router.push(`post/${post.slug}`);
+      nprogress.done();
+    });
+  }
   repaint(size = this.getSize(), props = this.props){
     this.size = size;
     if(this.size){
       this.setState({
         isFunky: true,
         pictures: FunkyGallery
-          .funkify(props.posts.get(this.props.params.slug).pictures, this.size)
+          .funkify(props.posts.get(props.params.slug).pictures, this.size)
           .reduce((previous, current) => {
             //tag the last element in the collection as last
             if(current.length) _.last(current).funky.isLast = true;
@@ -158,7 +178,7 @@ export default class Post extends React.Component {
     } else {
       this.setState({
         isFunky: false,
-        pictures: props.posts.get(this.props.params.slug).pictures
+        pictures: props.posts.get(props.params.slug).pictures
       });
     }
     this.resolveReadOn();
@@ -169,7 +189,8 @@ export default class Post extends React.Component {
   }
   getPost(){
     return this.props.posts.get(this.props.params.slug) || {
-      pictures: new Map()
+      pictures: new Map(),
+      latest: []
     };
   }
   getPicture(){
@@ -177,7 +198,7 @@ export default class Post extends React.Component {
     return ref ? ref.getWrappedInstance() : false;
   }
   getPictures(props = this.props){
-    let post = props.posts.get(this.props.params.slug);
+    let post = props.posts.get(props.params.slug);
     return post ? post.pictures : false;
   }
   componentWillMount(){
@@ -196,7 +217,12 @@ export default class Post extends React.Component {
     window.removeEventListener('scroll', this.onScroll);
   }
   componentWillReceiveProps(next){
-    if(!this.getPictures() || this.getPictures() !== this.getPictures(next)){
+    //changing
+    /*if(this.props.params.slug !== next.params.slug){
+      this.repaint(this.getSize(), next);
+    }*/
+
+    if(!this.getPictures() || !_.isEqual(this.getPictures(), this.getPictures(next))){
       this.repaint(this.getSize(), next);
     }
   }
@@ -292,19 +318,12 @@ export default class Post extends React.Component {
               top: this.state.nav.top,
               left: this.state.nav.left
             }}>
-            <p className="smaller">
-              <em>You are reading part #3 in the Southeast Asia 2015/2016 trip.
-                There are <strong>13</strong> posts in total from this trip, make
-                sure to check them out all!
-              </em>
-            </p>
-            <a className="button button-block button-green"><i className="fa fa-map-o"></i>All posts from the trip</a>
-
             <h2 className="latest">Latest posts</h2>
             <ul className="latest">
-              <li><a href="#">Hué (16.12.2015)</a></li>
-              <li><a href="#">Sa Pa (23.12.2015)</a></li>
-              <li><a href="#">Ha Noi (1.1.2016)</a></li>
+              {this.getPost().latest.map(latest => {
+                return (<li key={latest.id}><a onClick={() => this.handleGotoPost(latest)}>{latest.title}</a></li>)
+              })}
+
             </ul>
           </nav>
         </div>
@@ -312,3 +331,17 @@ export default class Post extends React.Component {
     )
   }
 }
+
+/*
+
+<li><a onClick={() => this.handleGotoPost(this.getPost().previous)}>Previous: {this.getPost().previous.title}</a></li>
+<li><a onClick={() => this.handleGotoPost(this.getPost().next)}>Next: {this.getPost().next.title}</a></li>
+
+<p className="smaller">
+  <em>You are reading part #3 in the Southeast Asia 2015/2016 trip.
+    There are <strong>13</strong> posts in total from this trip, make
+    sure to check them out all!
+  </em>
+</p>
+<a className="button button-block button-green"><i className="fa fa-map-o"></i>All posts from the trip</a>
+ */

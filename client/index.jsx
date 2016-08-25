@@ -37,7 +37,7 @@ const reducer = combineReducers(reducers);
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, state);
 
 let onUpdate = () => {
-  console.log(document.title, window.location.pathname);
+  //console.log(document.title, window.location.pathname);
 }
 
 //render the app into the `#app` element
