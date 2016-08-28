@@ -17,7 +17,7 @@ export default class App extends React.Component {
   //render the component
   render() {
     return (
-      <div>
+      <div className="site">
         <Header />
         {this.props.children}
         <Footer />

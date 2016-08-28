@@ -6,7 +6,8 @@ footer {
   @include wrapper();
   background: #404040;
   color: #aaa;
-  padding: 1em 0 0;
+  flex: none;
+  padding: 0.5rem 0;
   .container {
     font-style: italic;
     line-height: 1.6em;

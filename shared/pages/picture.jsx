@@ -70,7 +70,7 @@ export default class Picture extends React.Component {
     let next = this.getPictures().length <= this.index + 1 ? false : this.getPictures()[this.index + 1];
     if(next){
       nprogress.start();
-      Utils.loadImage(next.content).then(image => {
+      Utils.loadImage(Utils.getDensityAwareUrl(next.content)).then(image => {
         this.props.dispatch(PostActions.changePicture('next'));
         this.setState({leavingForNext: true});
         this.context.router.push(`post/${this.props.params.slug}/${next.name}`);
@@ -85,7 +85,7 @@ export default class Picture extends React.Component {
     let previous = this.index - 1 < 0 ? false : this.getPictures()[this.index - 1];
     if(previous){
       nprogress.start();
-      Utils.loadImage(previous.content).then(image => {
+      Utils.loadImage(Utils.getDensityAwareUrl(previous.content)).then(image => {
         this.props.dispatch(PostActions.changePicture('previous'));
         this.setState({leavingForPrevious: true});
         this.context.router.push(`post/${this.props.params.slug}/${previous.name}`);
@@ -140,7 +140,7 @@ export default class Picture extends React.Component {
             {'entering-as-previous': this.props.posts.get('change-picture-direction') === 'previous'},
             {'entering-as-next': this.props.posts.get('change-picture-direction') === 'next'}
         )}>
-          <img src={this.getPicture().content} />
+          <img src={Utils.getDensityAwareUrl(this.getPicture().content)} />
           <div className={classnames('comment')}>{this.getPicture().description}</div>
 
           <Helmet

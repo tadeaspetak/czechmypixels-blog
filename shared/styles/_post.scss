@@ -34,12 +34,12 @@ main.post {
         }
       }
       .post-body {
-        max-height: 300px;
-        overflow: hidden;
+        /*max-height: 300px;
+        overflow: hidden;*/
         text-align: justify;
         &.full {
-          max-height: none;
-          overflow: auto;
+          /*max-height: none;
+          overflow: auto;*/
         }
         li {
           text-align: justify;

@@ -11,6 +11,17 @@ body {
   font: 1em/1.4 "Raleway","Georgia";
   margin: 0;
 }
+#app,
+body,
+html {
+  height: 100%;
+  min-height: 100%;
+}
+div.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 input,
 textarea {
   font: 1em/1.4 "Raleway","Calibri", "Verdana", sans-serif;
@@ -29,14 +40,11 @@ img {
 }
 // links
 a {
-  border-bottom: 1px dotted #1CAE66;
   color: #1CAE66;
   cursor: pointer;
-  display: inline-block;
-  padding-bottom: -2px;
-  text-decoration: none;
+  text-decoration: underline;
   &:hover {
-    border-bottom-style: solid;
+    text-decoration: none;
   }
 }
 // buttons
@@ -47,9 +55,11 @@ button {
   border-radius: 2px;
   color: #404040;
   cursor: pointer;
+  display: inline-block;
   line-height: 1em;
   font-size: 1rem;
   padding: 0.5rem 1rem;
+  text-decoration: none;
   &.button-green {
     color: white;
     background: #46B980;
@@ -66,10 +76,9 @@ button {
     display: block;
     width: 100%;
   }
-  &[disabled]{
+  &[disabled] {
     cursor: not-allowed;
   }
-
   i.fa {
     font-size: 0.8em;
     margin-right: 6px;
@@ -100,6 +109,7 @@ button {
 //content
 main {
   @include wrapper();
+  flex: 1 0 auto;
   margin-bottom: 2em;
   padding: 0;
   .container {
@@ -113,7 +123,6 @@ main {
 @import 'footer';
 @import 'home';
 @import 'post';
-
 @media (min-width: $screen-medium) {
   //buttons
   a.button,
@@ -133,5 +142,11 @@ main {
     .container {
       width: 1200px;
     }
+  }
+}
+//fix font size on iphone
+@media screen and (max-device-width: 480px) {
+  body {
+    -webkit-text-size-adjust: none;
   }
 }

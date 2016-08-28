@@ -6,15 +6,17 @@ header {
   @include wrapper();
   background: #eee;
   border-bottom: 1px solid #ddd;
+  flex: none;
   padding: 1em 5%;
   text-align: left;
   //site header
   h1.site-header {
-    font-family: 'Indie Flower';
     cursor: pointer;
     display: inline-block;
+    float:left;
+    font-family: 'Indie Flower';
     font-size: 1.6rem;
-    margin: 0 0 0.5rem;
+    margin: 0;
     i.fa {
       font-size: 1.2rem;
       margin-right: 10px;
@@ -22,6 +24,7 @@ header {
   }
   //buttons
   .controls {
+    margin-top: 2px;
     > span {
       display: block;
       margin: 0 0 0.5rem;
@@ -37,16 +40,15 @@ header {
 //starting from a small screen, display all header elements on a single row
 @media(min-width: $screen-small) {
   header {
-    padding: 0.6rem 1.2rem 0.5rem;
+    padding: 0.5rem 1.2rem;
     h1.site-header {
       margin: 0;
     }
     .controls {
       float: right;
-      margin-top: 2px;
       > span {
         display: inline-block;
-        margin-right: 0.5em;
+        margin: 0 0.5em 0 0;
         &:last-of-type {
           margin-right: 0;
         }

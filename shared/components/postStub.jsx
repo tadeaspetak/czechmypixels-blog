@@ -2,6 +2,7 @@ import utils from 'lib/utils';
 import React from 'react';
 import * as PostActions from 'actions/PostActions';
 import nprogress from 'nprogress';
+import Utils from 'lib/utils';
 
 /**
  * Post stub shown on the home page and when filtering.
@@ -23,7 +24,7 @@ export default class PostStub extends React.Component {
   render() {
     return (
       <div className="post-stub" onClick={this.handleStubClick.bind(this)} style={{
-          backgroundImage: `url("${this.props.stub.colourBanner}")`
+          backgroundImage: `url("${Utils.getDensityAwareUrl(this.props.stub.colourBanner)}")`
         }}>
         <div className="post-stub-contents">
           <h2>{this.props.stub.title}</h2>

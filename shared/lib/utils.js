@@ -21,6 +21,17 @@ let Utils = {
       image.onload = () => resolve(image);
       image.src = url;
     });
+  },
+  getPixelDensity(){
+    return typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+  },
+  getDensityAwareUrl(url){
+    let density = Utils.getPixelDensity();
+    if(density > 1){
+      let dot = url.lastIndexOf('.');
+      return `${url.substring(0, dot)}@2x${url.substring(dot)}`;
+    }
+    return url;
   }
 };
 

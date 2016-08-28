@@ -39,6 +39,9 @@ main.home {
         }
       }
     }
+    button.load-more{
+      padding: .6rem 0;
+    }
   }
 }
 @media(min-width: $screen-small) {
@@ -55,6 +58,17 @@ main.home {
               overflow: hidden;
             }
           }
+        }
+      }
+    }
+  }
+}
+@media(min-width: $screen-medium){
+  main.home{
+    .container{
+      button.load-more{
+        i.fa{
+          font-size: 1em;
         }
       }
     }

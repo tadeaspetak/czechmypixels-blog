@@ -76,9 +76,11 @@ export default class Post extends React.Component {
     this.onScroll = this.onScroll.bind(this);
   }
   handlePicutreClick(picture){
-    Utils.loadImage(picture.content).then(() => {
+    nprogress.start();
+    Utils.loadImage(Utils.getDensityAwareUrl(picture.content)).then(() => {
       this.props.dispatch(PostActions.changePicture('none'));
       this.context.router.push(`post/${this.getPost().slug}/${picture.name}`);
+      nprogress.done();
     });
   }
   onKeyup(e){
@@ -239,7 +241,7 @@ export default class Post extends React.Component {
   getPlain(){
     return this.state.pictures.map(picture => {
       return (<a key={picture.id} className={classnames('plain-image')} onClick={() => this.handlePicutreClick(picture)}>
-          <img src={picture.thumbnail} alt="" />
+          <img src={Utils.getDensityAwareUrl(picture.thumbnail)} alt="" />
           <span className={classnames('image-description', {visible: picture.description})}>{picture.description}</span>
       </a>);
     })
@@ -249,7 +251,7 @@ export default class Post extends React.Component {
       return (<a key={picture.id} className={classnames('funky-image', {last: picture.funky.isLast})} onClick={() => this.handlePicutreClick(picture)} style={{
         height: `${picture.funky.height}px`,
         width: `${picture.funky.cropWidth}px`,
-        backgroundImage: `url("${picture.thumbnail}")`,
+        backgroundImage: `url("${Utils.getDensityAwareUrl(picture.thumbnail)}")`,
         backgroundSize: `${picture.funky.resizedWidth}px ${picture.funky.height}px`
       }}>
         <span className={classnames('image-description', {visible: picture.html})} dangerouslySetInnerHTML={{__html: picture.html}} />
@@ -258,12 +260,12 @@ export default class Post extends React.Component {
   }
   resolveReadOn(){
     //execute only on client
-    if(process.env.BROWSER){
+    /*if(process.env.BROWSER){
       let postBody = document.getElementsByClassName("post-body")[0];
       if(postBody && this.state.isReadOnNecessary !== postBody.scrollHeight > postBody.offsetHeight){
         this.setState({isReadOnNecessary: postBody.scrollHeight > postBody.offsetHeight});
       }
-    }
+    }*/
   }
   render() {
     return(
@@ -291,8 +293,8 @@ export default class Post extends React.Component {
           </ReactCSSTransitionGroup>
         </Swipeable>
         {/* banner */}
-        <div className="banner" style={{backgroundImage: this.getPost().banner ? `url("${this.getPost().banner.banner}")` : false}} />
-        <img className="banner" alt="" src={this.getPost().banner ? this.getPost().banner.banner : ''} />
+        <div className="banner" style={{backgroundImage: this.getPost().banner ? `url("${Utils.getDensityAwareUrl(this.getPost().banner.banner)}")` : false}} />
+        <img className="banner" alt="" src={this.getPost().banner ? Utils.getDensityAwareUrl(this.getPost().banner.banner) : ''} />
         {/* page content => post */}
         <div id="post-container" className="container">
           <article id="post-contents" className="post">
@@ -307,9 +309,9 @@ export default class Post extends React.Component {
             <div
               className={classnames('post-body', {'full': this.state.isShownFull})}
               dangerouslySetInnerHTML={{__html: this.getPost().contentHtml}}></div>
-            <div className={classnames('show-more', {'visible': !this.state.isShownFull && this.state.isReadOnNecessary})}>
+            {/* <div className={classnames('show-more', {'visible': !this.state.isShownFull && this.state.isReadOnNecessary})}>
               <a className="button show-more" onClick={() => this.setState({isShownFull: true})}><i className="fa fa-level-down" />... read on!</a>
-            </div>
+            </div> */}
           </article>
           {/* image gallery */}
           <div className="image-gallery">{this.state.isFunky ? this.getFunky() : this.getPlain()}</div>
