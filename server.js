@@ -110,7 +110,7 @@ app.use((req, res) => {
             </script>
           </head>
           <body>
-            <div id="app">${app}</div>
+            <div id="app"><div>${app}</div></div>
             <script src="bundle.js"></script>
           </body>
         </html>
