@@ -38,6 +38,7 @@ const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, state);
 
 let onUpdate = () => {
   //console.log(document.title, window.location.pathname);
+  window.scrollTo(0, 0);
 }
 
 //render the app into the `#app` element

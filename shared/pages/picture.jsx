@@ -148,8 +148,7 @@ export default class Picture extends React.Component {
             meta={[
               {property: "og:type", content: "article"},
               {property: "og:title", content: title},
-              {property: "og:description", content: this.getPicture().description},
-              {property: "og:image", content: ""}
+              {property: "og:image", content: Utils.normalizeUrl(this.getPicture().content)}
             ]}/>
         </div>);
   }

@@ -32,6 +32,37 @@ let Utils = {
       return `${url.substring(0, dot)}@2x${url.substring(dot)}`;
     }
     return url;
+  },
+  //prefix the URL with a host if this runs on the server (necessary as relative URLs naturally cannot suffice)
+  normalizeUrl(url) {
+    return process.env.BROWSER ? url : `http://${process.env.HOST}${url.startsWith('/') ? '' : '/'}${url}`;
+  },
+  //get coordinations
+  getCoords(element) {
+    let box = element.getBoundingClientRect();
+    let scroll = Utils.getScroll();
+    let client = Utils.getClient();
+
+    return {
+      top: Math.round(box.top +  scroll.top - client.top),
+      right: Math.round(box.right +  scroll.left - client.left),
+      bottom: Math.round(box.bottom +  scroll.top - client.top),
+      left: Math.round(box.left + scroll.left - client.left)
+    };
+  },
+  //get client coordinations
+  getClient(){
+    return {
+      top: document.documentElement.clientTop || document.body.clientTop || 0,
+      left: document.documentElement.clientLeft || document.body.clientLeft || 0
+    }
+  },
+  //get client scroll
+  getScroll(){
+    return {
+      top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop,
+      left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft
+    }
   }
 };
 

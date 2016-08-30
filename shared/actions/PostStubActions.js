@@ -1,5 +1,5 @@
 import request from 'axios';
-import URL from 'lib/url';
+import Utils from 'lib/utils';
 
 /**
  * Post stub actions.
@@ -10,6 +10,6 @@ import URL from 'lib/url';
 export function getPostStubs(offset = 0) {
   return {
     type: 'GET_POST_STUBS',
-    promise: request.get(URL.normalize(`api/v1/posts/stubs?offset=${offset}`))
+    promise: request.get(Utils.normalizeUrl(`api/v1/posts/stubs?offset=${offset}`))
   }
 }

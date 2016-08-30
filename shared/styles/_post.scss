@@ -12,10 +12,51 @@ main.post {
     display: none;
   }
   .container {
-    nav{
-      display:none;
+    button[disabled]{
+      font-style: italic;
     }
-    //post
+    // post navigation
+    .post-navigation{
+      nav {
+        position: static;
+        text-align: left;
+        width: 100%;
+        .post-previous, .post-next{
+          margin-bottom: .3em
+        }
+        .post-next{
+          i.fa{
+            margin-right:0;
+            margin-left: 6px;
+          }
+        }
+        .post-all{
+          //margin-bottom: 1.5em;
+        }
+        div.latest{
+          margin: 1em 0 1.5em;
+          text-align: center;
+          h2{
+            border-bottom: 1px dotted #eee;
+            font-size: 1.1rem;
+            padding:0 0 .3rem;
+            margin: 0 0 0.3rem;
+            i.fa{
+              margin-right: 6px;
+            }
+          }
+          ul{
+            margin: 0;
+            padding:0;
+            list-style-type: none;
+          }
+        }
+      }
+      .post-navigation-supplementary{
+        display:none;
+      }
+    }
+    // post
     article.post {
       .post-meta {
         @include clearfix();
@@ -63,9 +104,7 @@ main.post {
     //image gallery
     .image-gallery {
       @include clearfix();
-      //TODO: ? border-top: 1px dotted #eee;
       padding-top: 1em;
-      //plain images
       a.plain-image {
         display: block;
         margin: 0 0 4px;
@@ -117,7 +156,6 @@ main.post {
 }
 @media(min-width: $screen-medium) {
   main.post {
-    //banner
     div.banner {
       display: none;
     }
@@ -131,39 +169,47 @@ main.post {
   main.post {
     .container {
       position: relative;
-      nav {
-        display:block;
-        position: absolute;
-        top: 30px;
-        left: 0;
-        width: 200px;
-        text-align: left;
-        h2.latest {
-          margin: 3rem 0 0.5rem;
+      .post-navigation{
+        nav {
+          position: absolute;
+          top: 10px;
+          left: 0;
+          width: 200px;
         }
-        ul {
-          margin: 0;
-          padding: 0 0 0 1.5em;
-          //list-style-type: none;
+        .post-navigation-supplementary{
+          //border-top: 1px dotted #ddd;
+          display:block;
+          margin: 0 0 0;
+          padding: 8px 0 0;
+          button{
+            padding: .6rem 1rem;
+            width: 33.333%;
+            &.post-all{
+              border-radius: 0;
+            }
+            &.post-previous{
+              border-top-right-radius: 0;
+              border-bottom-right-radius: 0;
+              text-align:left;
+            }
+            &.post-next{
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
+              text-align:right;
+              i.fa{
+                margin-right:0;
+                margin-left: 6px;
+              }
+            }
+          }
         }
       }
       article.post {
         float: left;
         margin: 0 0 0 250px;
-        /*h1.post-heading {
-          float: left;
-          font-size: 1.6rem;
-          font-weight: bold;
+        .post-body{
+          min-height: 220px;
         }
-        .post-details {
-          float: right;
-          font-style: italic;
-          font-size: 1.1rem;
-          line-height: 1.6rem;
-          .post-details-date {
-            font-weight: bold;
-          }
-        }*/
       }
     }
   }
