@@ -82,6 +82,7 @@ app.use((req, res) => {
     function renderView() {
       return new Promise((resolve, reject) => {
         let app = renderToString((<Provider store={store}><RouterContext {...props}/></Provider>));
+        let analytics = process.env.NODE_ENV === 'production' ? 'analytics.czechmypixels.com' : 'analytics.czechmypixels';
         let head = Helmet.rewind();
         let html = `
         <!doctype html>
@@ -114,14 +115,14 @@ app.use((req, res) => {
               _paq.push(['trackPageView']);
               _paq.push(['enableLinkTracking']);
               (function() {
-                var u="//analytics.czechmypixels/";
+                var u="//${analytics}/";
                 _paq.push(['setTrackerUrl', u+'piwik.php']);
                 _paq.push(['setSiteId', 1]);
                 var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
                 g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
               })();
             </script>
-            <noscript><p><img src="//analytics.czechmypixels/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+            <noscript><p><img src="//${analytics}/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
             <!-- End Piwik Code -->
           </head>
           <body>
