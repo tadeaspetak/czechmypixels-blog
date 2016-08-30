@@ -35,10 +35,22 @@ if (process.env.BROWSER) {
 const state = transit.fromJSON(JSON.stringify(window.state));
 const reducer = combineReducers(reducers);
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, state);
+var hadPicture = undefined;
 
-let onUpdate = () => {
-  //console.log(document.title, window.location.pathname);
-  window.scrollTo(0, 0);
+let onUpdate = function() {
+  //slide up except when going to or from a picture
+  if(hadPicture === false && !this.state.params.picture){
+    window.scrollTo(0, 0);
+  }
+  hadPicture = typeof this.state.params.picture !== 'undefined';
+
+  //track the change
+  _paq.push(['setDocumentTitle', document.title]);
+  _paq.push(['trackPageView']);
+}
+
+let beforeUpdate = function(ev) {
+  console.log('before update', document.title, window.location.pathname);
 }
 
 //render the app into the `#app` element

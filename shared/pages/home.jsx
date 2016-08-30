@@ -39,9 +39,6 @@ export default class Home extends React.Component {
       nprogress.done();
     });
   }
-  componentWillMount(){
-    console.log(`Pixel density is: ${Utils.getPixelDensity()}.`);
-  }
   render() {
     return (
       <main className="home">
