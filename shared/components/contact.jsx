@@ -78,7 +78,7 @@ export default class Contact extends React.Component {
                     <input type="email" id="contact-email" value={this.state.email} onChange={e => this.setState({email: e.target.value})} placeholder="E-mail" required />
                   </div>
                   <div className="form-group">
-                    <textarea rows="5" value={this.state.message} onChange={e => this.setState({message: e.target.value})} placeholder="Message"></textarea>
+                    <textarea rows="5" value={this.state.message} onChange={e => this.setState({message: e.target.value})} placeholder="Message" required></textarea>
                   </div>
                   <p className={classnames('server-response', this.state.response.type ? this.state.response.type : 'hidden')}>{this.state.response.message}</p>
                 </div>
