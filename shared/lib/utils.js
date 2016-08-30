@@ -26,8 +26,7 @@ let Utils = {
     return typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
   },
   getDensityAwareUrl(url){
-    let density = Utils.getPixelDensity();
-    if(density > 1){
+    if(Utils.getPixelDensity() > 1 && Utils.getViewport().width > 1000){
       let dot = url.lastIndexOf('.');
       return `${url.substring(0, dot)}@2x${url.substring(dot)}`;
     }
