@@ -38,23 +38,22 @@ const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, state);
 var hadPicture = undefined;
 
 let onUpdate = function() {
-  //slide up except when going to or from a picture
-  if(hadPicture === false && !this.state.params.picture){
-    window.scrollTo(0, 0);
+  if (process.env.BROWSER) {
+
+    //slide up except when going to or from a picture
+    if (hadPicture !== true && !this.state.params.picture) {
+      window.scrollTo(0, 0);
+    }
+    hadPicture = typeof this.state.params.picture !== 'undefined';
+
+    //track the change in the router
+    _paq.push(['setCustomUrl', window.location.pathname]);
+    _paq.push(['trackPageView', document.title]);
   }
-  hadPicture = typeof this.state.params.picture !== 'undefined';
-
-  //track the change
-  _paq.push(['setDocumentTitle', document.title]);
-  _paq.push(['trackPageView']);
-}
-
-let beforeUpdate = function(ev) {
-  console.log('before update', document.title, window.location.pathname);
 }
 
 //render the app into the `#app` element
 render(
   <Provider store={store}>
-    <Router children={routes} history={browserHistory} onUpdate={onUpdate}/>
-  </Provider>, document.getElementById('app'));
+  <Router children={routes} history={browserHistory} onUpdate={onUpdate}/>
+</Provider>, document.getElementById('app'));
