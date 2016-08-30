@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 /**
- * Very simple modal dialog component.
+ * Simple modal dialog component.
  */
 
 export default class Modal extends React.Component {
@@ -14,7 +14,7 @@ export default class Modal extends React.Component {
     this.keyDownHandler = this.onKeyDown.bind(this);
   }
   onKeyDown(event){
-    //ESC
+    //close on ESC
     if(event.which === 27){
       this.requestClose();
     }
@@ -34,14 +34,12 @@ export default class Modal extends React.Component {
   resolveIsOpen(){
     //add a class on a body
     document.getElementsByTagName('body')[0].className = this.props.isOpen ? 'modal-open' : '';
-
     //key listener
     if(this.props.isOpen){
       document.addEventListener('keydown', this.keyDownHandler);
     } else {
       document.removeEventListener('keydown', this.keyDownHandler);
     }
-
   }
   onClick(event){
     //the overlay has been clicked
@@ -51,13 +49,8 @@ export default class Modal extends React.Component {
   }
   render() {
     return (
-      <div
-        className={classnames('modal', this.props.isOpen ? 'visible' : 'hidden')}
-        onClick={this.onClick.bind(this)}>
-        <div className="modal-container">
-          {this.props.children}
-        </div>
-      </div>
-    )
+      <div className={classnames('modal', this.props.isOpen ? 'visible' : 'hidden')} onClick={this.onClick.bind(this)}>
+        <div className="modal-container">{this.props.children}</div>
+      </div>);
   }
 }

@@ -3,15 +3,11 @@ import {connect} from 'react-redux';
 import {needs} from 'lib/needs';
 import * as PostActions from 'actions/PostActions';
 import { Map } from 'immutable';
-const _ = require('lodash');
 import Helmet from 'react-helmet';
-
 import classnames from 'classnames';
-import moment from 'moment';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Swipeable from 'react-swipeable';
 import Utils from 'lib/utils';
-import nprogress from 'nprogress';
 import PostDetail from 'components/postDetail';
 
 /**
@@ -53,6 +49,12 @@ export default class Post extends React.Component {
       }
     }
   }
+  handleClick(){
+    let picture = this.getPicture();
+    if(picture){
+      picture.close();
+    }
+  }
   getPost(){
     return this.props.posts.get(this.props.params.slug) || {
       pictures: new Map(),
@@ -86,10 +88,11 @@ export default class Post extends React.Component {
           className={classnames('modal-pictures', this.props.params.picture ? 'visible' : 'hidden')}
           onSwipedLeft={() => this.handleSwipe('left')}
           onSwipedRight={() => this.handleSwipe('right')}
-          onClick={() => this.context.router.push(`post/${this.props.params.slug}`)}>
+          onClick={() => this.handleClick()}>
           <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
             {this.props.children ? React.cloneElement(this.props.children, {
               key: this.props.location.pathname,
+              post: this.getPost(),
               ref: 'picture-' + this.props.location.pathname
             }) : null}
           </ReactCSSTransitionGroup>
@@ -104,13 +107,3 @@ export default class Post extends React.Component {
     )
   }
 }
-
-/*
-<p className="smaller">
-  <em>You are reading part #3 in the Southeast Asia 2015/2016 trip.
-    There are <strong>13</strong> posts in total from this trip, make
-    sure to check them out all!
-  </em>
-</p>
-<a className="button button-block button-green"><i className="fa fa-map-o"></i>All posts from the trip</a>
- */

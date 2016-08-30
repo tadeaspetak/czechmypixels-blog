@@ -1,14 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
-
-//routing
 import {Router, browserHistory} from 'react-router';
 import routes from 'routes';
-
-//state
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import {fromJS} from 'immutable';
 import promiseMiddleware from 'lib/promiseMiddleware';
 import transit from 'transit-immutable-js';
 import * as reducers from 'reducers';
@@ -17,7 +12,7 @@ import * as reducers from 'reducers';
  * Client gateway into the app.
  */
 
-//styles (make sure we are in the browser before requiring these, otherwise, there shall be errors!)
+//make sure we are in the browser before requiring styles, otherwise, there shall be errors!
 if (process.env.BROWSER) {
   //require styles
   require('font-awesome/css/font-awesome.css');

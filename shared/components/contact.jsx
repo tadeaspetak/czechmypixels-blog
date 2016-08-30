@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import nprogress from 'nprogress';
 
 /**
- * Component used for sending message to Marie.
+ * Component used for sending emails to us.
  * Rendered into a simple modal dialog.
  */
 
@@ -33,7 +33,6 @@ export default class Contact extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     nprogress.start();
-
     axios.post('/api/v1/contact', {
       name: this.state.name,
       email: this.state.email,

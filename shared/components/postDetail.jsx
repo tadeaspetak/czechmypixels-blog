@@ -6,7 +6,7 @@ import PostGallery from 'components/postGallery.jsx';
 import PostNavigation from 'components/postNavigation.jsx';
 
 /**
- * Post detail showing the banner, post content and also including its
+ * Post detail showing the banner, post content and also requiring its
  * subcomponents: navigation and gallery.
  */
 
@@ -35,19 +35,17 @@ export default class PostDetail extends React.Component {
   }
   render() {
     return (<div>
-      {/* banner */}
+      {/* banner, outside of the actual post container (so that it can be full width) */}
       <div className="banner" style={{backgroundImage: this.props.post.banner ? `url("${Utils.getDensityAwareUrl(this.props.post.banner.banner)}")` : false}} />
       <img className="banner" alt="" src={this.props.post.banner ? Utils.getDensityAwareUrl(this.props.post.banner.banner) : ''} />
       <div id="post-container" className="container">
         <article id="post-contents" className="post">
-          {/* post meta*/}
           <div className="post-meta">
             <h1 className="post-heading">{this.props.post.title}</h1>
             <span className="post-details">
-              Published on <span className="post-details-date">{moment(this.props.post.date).format('MMM DD, YYYY')}</span>
+              <span className="post-details-date">{moment(this.props.post.published).format('MMM DD, YYYY')}</span>
             </span>
           </div>
-          {/* post body & show more button */}
           <div
             className={classnames('post-body', {'full': this.state.isShownFull})}
             dangerouslySetInnerHTML={{__html: this.props.post.contentHtml}}></div>
@@ -57,8 +55,6 @@ export default class PostDetail extends React.Component {
         </article>
         <PostGallery
           dispatch={this.props.dispatch}
-          slug={this.props.slug}
-          posts={this.props.posts}
           post={this.props.post} />
         <PostNavigation
           dispatch={this.props.dispatch}

@@ -18,13 +18,10 @@ export default class About extends React.Component {
   render() {
     return (
       <span>
-        <a
-          className="button"
-          onClick={() => this.setState({isOpen: true})}>
-          <i className="fa fa-info" />About</a>
-        <Modal
-          isOpen={this.state.isOpen}
-          onRequestClose={this.close.bind(this)}>
+        <a className="button" onClick={() => this.setState({isOpen: true})}>
+          <i className="fa fa-info" />About
+        </a>
+        <Modal isOpen={this.state.isOpen} onRequestClose={this.close.bind(this)}>
           <div>
             <div className="modal-header">
               <h1><i className="fa fa-info"></i>About <strong>Czech My Pixels</strong></h1>
@@ -32,14 +29,12 @@ export default class About extends React.Component {
             </div>
             <div className="modal-body">
               <p>Pictures and scribbles from some of our travels &apos;round this blue planet.</p>
-
               <div className="person">
                 <div className="person-description">
                   <h2><i className="fa fa-camera-retro"></i>Marie</h2>
                   <p>... the button presser.</p>
                 </div>
               </div>
-
               <div className="person person-odd">
                 <div className="person-description">
                   <h2><i className="fa fa-paint-brush"></i>Tadeáš</h2>
@@ -52,7 +47,6 @@ export default class About extends React.Component {
             </div>
           </div>
         </Modal>
-      </span>
-    )
+      </span>);
   }
 }

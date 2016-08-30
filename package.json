@@ -46,7 +46,6 @@
     "style-loader": "^0.13.0",
     "transit-immutable-js": "^0.6.0",
     "transit-js": "^0.8.846",
-    "truncate": "^2.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.13",
     "webpack-dev-middleware": "^1.5.1",

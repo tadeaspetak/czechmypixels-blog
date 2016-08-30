@@ -5,9 +5,6 @@ import {renderToString} from 'react-dom/server';
 import routes from 'routes';
 import {RouterContext, match} from 'react-router';
 import path from 'path';
-import fs from 'fs';
-
-//state
 import {applyMiddleware, createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import promiseMiddleware from 'lib/promiseMiddleware';
@@ -25,13 +22,13 @@ var history = useBasename(createMemoryHistory)({basename: '/'})
 //make sure the path to EVERYTHING is corrrect
 process.chdir(__dirname);
 
-// load `dev` configuration if we are not in the production environment
+// load `dev` configuration unless we are in the production environment
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 if (process.env.NODE_ENV !== 'production') {
   require('./webpack.dev').default(app);
 }
 
-// static files in `/dist` (TODO: how does this work in the `dev` mode?)
+// files served from the `/build` directory
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use((req, res) => {
@@ -71,7 +68,7 @@ app.use((req, res) => {
         return (component.needs || []).map(need => need(props))
           .concat(((component.WrappedComponent ? component.WrappedComponent.needs : []) || []).map(need => need(props)))
           .concat(previous);
-        }, []);
+      }, []);
       return Promise.all(needs.map(need => dispatch(need)));
     }
 
@@ -138,12 +135,11 @@ app.use((req, res) => {
 
     //fetch data, render & return the source
     fetchComponentData(store.dispatch, props.components, props.params)
-        .then(renderView)
-        .then(html => res.type('html').send(html))
-        .catch(error => {
-          console.log(error);
-          res.end(error.message)
-        });
+      .then(renderView)
+      .then(html => res.type('html').send(html)).catch(error => {
+        console.log(error);
+        res.end(error.message)
+    });
   });
 });
 

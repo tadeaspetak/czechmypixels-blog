@@ -54,6 +54,7 @@ export default class PostGallery extends React.Component {
     this.onResize = this.onResize.bind(this);
   }
   componentWillMount(){
+    //pictures are loaded on component mount
     if(this.props.post.pictures.length){
       this.repaint();
     }
@@ -62,6 +63,7 @@ export default class PostGallery extends React.Component {
     window.addEventListener('resize', this.onResize);
   }
   componentWillReceiveProps(next){
+    //pictures have changed (or arrived)
     if(!this.getPictures() || !_.isEqual(this.getPictures(), this.getPictures(next))){
       this.repaint(this.getSize(), next);
     }
@@ -80,13 +82,12 @@ export default class PostGallery extends React.Component {
     nprogress.start();
     Utils.loadImage(Utils.getDensityAwareUrl(picture.content)).then(() => {
       this.props.dispatch(PostActions.changePicture('none'));
-      this.context.router.push(`post/${this.props.slug}/${picture.name}`);
+      this.context.router.push(`post/${this.props.post.slug}/${picture.name}`);
       nprogress.done();
     });
   }
   getPictures(props = this.props){
-    let post = props.posts.get(props.slug);
-    return post ? post.pictures : false;
+    return props.post ? props.post.pictures : false;
   }
   getSize(){
     let width = Utils.getViewport().width;
@@ -98,7 +99,7 @@ export default class PostGallery extends React.Component {
       this.setState({
         isFunky: true,
         pictures: FunkyGallery
-          .funkify(props.posts.get(props.slug).pictures, this.size)
+          .funkify(props.post.pictures, this.size)
           .reduce((previous, current) => {
             //tag the last element in the collection as last
             if(current.length) _.last(current).funky.isLast = true;
@@ -108,7 +109,7 @@ export default class PostGallery extends React.Component {
     } else {
       this.setState({
         isFunky: false,
-        pictures: props.posts.get(props.slug).pictures
+        pictures: props.post.pictures
       });
     }
   }
@@ -119,6 +120,7 @@ export default class PostGallery extends React.Component {
       return;
     }
 
+    //repaint when resizing and viewport width lower than 768 (never happens in practice, I guess, but hey, I like stuff clean)
     this.width = Utils.getDimensions().width;
     let current = this.getSize();
     if(current !== this.size || Utils.getViewport().width < 768) this.repaint(current);

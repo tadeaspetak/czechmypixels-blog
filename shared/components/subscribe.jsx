@@ -1,12 +1,11 @@
 import React from 'react';
 import Modal from './modal.jsx';
-
 import axios from 'axios';
 import classnames from 'classnames';
 import nprogress from 'nprogress';
 
 /**
- * Component used for sending a message users to the newsletter.
+ * Component used for subscribing users to the newsletter.
  * Rendered into a simple modal dialog.
  */
 

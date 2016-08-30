@@ -26,7 +26,7 @@ export default class Picture extends React.Component {
     //significant key map
     this.keyMap = new Map()
       //close on escape
-      .set(27, () => this.handleOverlayClick.bind(this)())
+      .set(27, () => this.close.bind(this)())
       //previous on left arrow
       .set(37, () => this.handleGotoPrevious.bind(this)())
       //next on right arrow
@@ -78,7 +78,7 @@ export default class Picture extends React.Component {
         nprogress.done();
       });
     } else {
-      this.handleOverlayClick();
+      this.close();
     }
   }
   handleGotoPrevious(){
@@ -93,10 +93,11 @@ export default class Picture extends React.Component {
         nprogress.done();
       });
     } else {
-      this.handleOverlayClick();
+      this.close();
     }
   }
-  handleOverlayClick(){
+  close(){
+    document.title = this.props.posts.get(this.props.params.slug).title;
     this.context.router.push(`post/${this.props.params.slug}`);
   }
   handleKeyup(e){
@@ -130,7 +131,6 @@ export default class Picture extends React.Component {
     return {container, picture, comment};
   }
   render() {
-    //TODO: resolve image URL in og tag to absolute...
     let title = `${this.getPicture().name} | Czech My Pixels`;
     return(<div
       className={classnames(
@@ -142,7 +142,6 @@ export default class Picture extends React.Component {
         )}>
           <img src={Utils.getDensityAwareUrl(this.getPicture().content)} />
           <div className={classnames('comment')}>{this.getPicture().description}</div>
-
           <Helmet
             title={title}
             meta={[

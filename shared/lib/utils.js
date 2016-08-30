@@ -11,10 +11,6 @@ let Utils = {
       height: process.env.BROWSER ? document.body.clientHeight : 0
     };
   },
-  truncate(string, max) {
-    let trimmed = string.substring(0, max);
-    return trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')));
-  },
   loadImage(url){
     return new Promise((resolve, reject) => {
       let image = new Image();
