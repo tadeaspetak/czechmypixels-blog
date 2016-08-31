@@ -9,7 +9,7 @@ const handlers = new Map()
   .set('GET_POST_STUBS', (state, action) => {
     state = state.set('total', action.res.data.total);
 
-    let stubs = state.get('stubs') || new Map();
+    let stubs = state.get('stubs') || new OrderedMap();
     action.res.data.stubs.forEach(stub => {
       stubs = stubs.set(stub.slug, stub);
     });
@@ -17,7 +17,7 @@ const handlers = new Map()
     return state.set('stubs', stubs);
   });
 
-const empty = new OrderedMap();
+const empty = new Map();
 export default function postStubReducer(state = empty, action) {
   return handlers.has(action.type) ? handlers.get(action.type)(state, action) : state;
 }
