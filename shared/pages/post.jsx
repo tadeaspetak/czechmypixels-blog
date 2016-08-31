@@ -39,21 +39,16 @@ export default class Post extends React.Component {
       this.handleSwipe('right');
     }
   }
-  handleSwipe(direction){
-    let picture = this.getPicture();
-    if(picture){
-      if(direction === 'left'){
-        picture.handleGotoNext();
-      } else if (direction === 'right'){
-        picture.handleGotoPrevious();
-      }
-    }
+  handleGotoPrevious(e){
+    if(e) e.stopPropagation();
+    this.getPicture().handleGotoPrevious();
+  }
+  handleGotoNext(e){
+    if(e) e.stopPropagation();
+    this.getPicture().handleGotoNext();
   }
   handleClick(){
-    let picture = this.getPicture();
-    if(picture){
-      picture.close();
-    }
+    this.getPicture().close();
   }
   getPost(){
     return this.props.posts.get(this.props.params.slug) || {
@@ -81,14 +76,19 @@ export default class Post extends React.Component {
             {property: "og:type", content: "article"},
             {property: "og:title", content: this.getPost().title},
             {property: "og:description", content: this.getPost().excerpt},
-            {property: "og:image", content: `${this.getPost().banner ? Utils.normalizeUrl(this.getPost().banner.content) : ''}`}
+            {property: "og:image", content: `${this.getPost().banner ? Utils.normalizeUrl(this.getPost().banner.content) : ''}`},
+            {property: "og:image:width", content: `${this.getPost().banner ? this.getPost().banner.width : 0}`},
+            {property: "og:image:height", content: `${this.getPost().banner ? this.getPost().banner.height : 0}`},
           ]} />
         {/* picture navigation */}
         <Swipeable
           className={classnames('modal-pictures', this.props.params.picture ? 'visible' : 'hidden')}
-          onSwipedLeft={() => this.handleSwipe('left')}
-          onSwipedRight={() => this.handleSwipe('right')}
+          onSwipedRight={() => this.handleGotoPrevious()}
+          onSwipedLeft={() => this.handleGotoNext()}
           onClick={() => this.handleClick()}>
+          <a className="picture-previous" onClick={e => this.handleGotoPrevious(e)}><i className="fa fa-angle-left"></i></a>
+          <a className="picture-next" onClick={e => this.handleGotoNext(e)}><i className="fa fa-angle-right"></i></a>
+          <a className="picture-close" onClick={e => this.click(e)}><i className="fa fa-times"></i></a>
           <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
             {this.props.children ? React.cloneElement(this.props.children, {
               key: this.props.location.pathname,

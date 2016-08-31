@@ -1,5 +1,15 @@
 @import 'common';
 .modal-pictures {
+  //don't display navigational icons on smaller displays
+  .picture-previous, .picture-next, .picture-close{
+    display:none;
+    color: #999;
+    text-decoration: none;
+    &:hover{
+      color: #fff;
+    }
+  }
+
   //position, display & overflow
   position: fixed;
   top: 0;
@@ -32,7 +42,7 @@
     //dimensions & dimension restrictions
     height: 95%;
     max-height: 95%;
-    max-width: 95%;
+    max-width: 90%;
     img {
       max-height: 100%;
       max-width: 100%;
@@ -45,7 +55,7 @@
       left: 0;
       right: 0;
       display: none;
-      &.visible{
+      &.visible {
         display: block;
       }
       //styling
@@ -96,6 +106,49 @@
     }
     &.leaving-for-next {
       transform: translate(-300px, 0);
+    }
+  }
+}
+
+@media screen and (min-width: $screen-large) {
+  .modal-pictures {
+    //navigation on larger screens
+    .picture-next,
+    .picture-previous {
+      display:inline-block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 4;
+      align-items: center;
+      display: flex;
+      width: 25%;
+      i.fa{
+        font-size: 45px;
+        flex: 1;
+      }
+    }
+    .picture-previous{
+      left: 0;
+      padding-left: 1em;
+      text-align:left;
+    }
+    .picture-next{
+      padding-right: 1em;
+      right: 0;
+      text-align:right;
+    }
+
+    .picture-close{
+      display:inline-block;
+      position:absolute;
+      top: 0;
+      right: 0;
+      z-index: 5;
+      i.fa{
+        font-size: 20px;
+        padding: 10px 15px 80px 80px;
+      }
     }
   }
 }
