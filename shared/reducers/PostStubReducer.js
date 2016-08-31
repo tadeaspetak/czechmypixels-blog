@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, OrderedMap } from 'immutable';
 
 /**
  * Post reducer.
@@ -17,7 +17,7 @@ const handlers = new Map()
     return state.set('stubs', stubs);
   });
 
-const empty = new Map();
+const empty = new OrderedMap();
 export default function postStubReducer(state = empty, action) {
   return handlers.has(action.type) ? handlers.get(action.type)(state, action) : state;
 }
