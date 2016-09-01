@@ -66,12 +66,18 @@ button {
     color: #b0b0b0;
     cursor: not-allowed;
   }
+  &:focus {
+    outline: 1px dotted #505050;
+  }
   &.button-green {
     color: white;
     background: #46B980;
     &[disabled] {
       color: white;
       background: #95eac0;
+    }
+    &:focus{
+      outline: 1px dotted #378a61;
     }
   }
   &.button-blue {

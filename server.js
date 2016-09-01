@@ -138,7 +138,7 @@ app.use((req, res) => {
       .then(renderView)
       .then(html => res.type('html').send(html)).catch(error => {
         console.log(error);
-        res.end(error.message)
+        res.end('There has been an error! No pixels to be czeched here, sorry...');
     });
   });
 });

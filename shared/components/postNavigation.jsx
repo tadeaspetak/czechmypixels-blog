@@ -55,8 +55,8 @@ export default class PostNavigation extends React.Component {
 
     if(contentsCoords.top > scroll.top){
       return {position: 'absolute', top: `10px`, left: `0px`};
-    } else if ((contentsCoords.bottom - navigation.offsetHeight - 30) < scroll.top){
-      return {position: 'absolute', top: `${contents.offsetHeight - navigation.offsetHeight - 20}px`, left: `0px`};
+    } else if ((contentsCoords.bottom - navigation.offsetHeight - 14) < scroll.top){
+      return {position: 'absolute', top: `${contents.offsetHeight - navigation.offsetHeight - 4}px`, left: `0px`};
     } else {
       return {position: `fixed`, top: `10px`, left: `${Utils.getCoords(document.getElementById('post-container')).left}px`};
     }
@@ -127,10 +127,10 @@ export default class PostNavigation extends React.Component {
       {/* supplementary navigation for larger screens */}
       <div className="post-navigation-supplementary">
         {this.getSupplementaryPrevious()}
+        {this.getSupplementaryNext()}
         <button className="button-green post-all" onClick={() => this.context.router.push('/')}>
           <i className="fa fa-map-signs"></i>Back to All Posts
         </button>
-        {this.getSupplementaryNext()}
       </div>
     </div>);
   }
