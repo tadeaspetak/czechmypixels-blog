@@ -19,25 +19,25 @@ export default class PostGallery extends React.Component {
   static sizes = [{
     min: 320,
     max: 480,
-    gap: 8,
+    gap: 1,
     rowHeight: () => 80 + _.random(0, 10) * 5,
     rowWidth: () => PostGallery.getAvailableWidth()
   }, {
     min: 480,
     max: 768,
-    gap: 8,
+    gap: 1,
     rowHeight: () => 120 + _.random(0, 10) * 5,
     rowWidth: () => PostGallery.getAvailableWidth()
   }, {
     min: 768,
     max: 1224,
-    gap: 8,
+    gap: 1,
     rowHeight: () => 150 + _.random(0, 10) * 5,
     rowWidth: 720
   }, {
     min: 1224,
     max: 0,
-    gap: 8,
+    gap: 1,
     //ideally, the row height would differ here too but older devices suck at scaling background images...
     rowHeight: () => 350,
     rowWidth: 1200

@@ -126,7 +126,7 @@ main.post {
         background-position: center;
         background-repeat: no-repeat;
         float: left;
-        margin: 0 8px 8px 0;
+        margin: 0 1px 1px 0;
         &.last {
           margin-right: 0;
         }
@@ -134,6 +134,8 @@ main.post {
       a.funky-image,
       a.plain-image {
         border: none;
+        //this is almost imperceptible but feels better, somehow
+        border-radius: 1px;
         position: relative;
         .image-description {
           background: rgba(0,0,0,0.6);
