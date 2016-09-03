@@ -107,7 +107,8 @@ export default class PostNavigation extends React.Component {
           top: this.state.style.top,
           left: this.state.style.left
         } : {}}>
-        {/* latest posts */}
+        {this.getPrevious()}
+        {this.getNext()}
         <div className="latest">
           <h2><i className="fa fa-pencil-square-o"></i>Latest posts</h2>
           <ul>
@@ -117,9 +118,6 @@ export default class PostNavigation extends React.Component {
           </ul>
         </div>
 
-        {/* navigation buttons */}
-        {this.getPrevious()}
-        {this.getNext()}
         <button className="button-block button-green post-all" onClick={() => this.context.router.push('/')}>
           <i className="fa fa-map-signs"></i>Back to All Posts
         </button>
