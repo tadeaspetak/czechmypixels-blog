@@ -31,9 +31,10 @@ const state = transit.fromJSON(JSON.stringify(window.state));
 const reducer = combineReducers(reducers);
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, state);
 var hadPicture = undefined;
+var renderedOnServer = true;
 
 let onUpdate = function() {
-  if (process.env.BROWSER) {
+  if (!renderedOnServer && process.env.BROWSER) {
 
     //slide up except when going to or from a picture
     if (hadPicture !== true && !this.state.params.picture) {
@@ -45,6 +46,7 @@ let onUpdate = function() {
     _paq.push(['setCustomUrl', window.location.pathname]);
     _paq.push(['trackPageView', document.title]);
   }
+  renderedOnServer = false;
 }
 
 //render the app into the `#app` element

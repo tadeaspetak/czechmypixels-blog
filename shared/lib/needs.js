@@ -17,7 +17,7 @@ export function needs(needs) {
         delete window.state;
       } else {
         needs.forEach(need => {
-          //TODO: binding `this` does not seem to work... is it because of the decorator stuff? but why would it?!
+          //safer to pass `props` as binding this wouldn't work if the decorator was written using an arrow function
           let result = need(this.props);
           return result ? this.props.dispatch(result) : false;
         });
