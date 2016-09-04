@@ -75,7 +75,7 @@ export default class PostNavigation extends React.Component {
   getPrevious(){
     return !this.hasPrevious() ? undefined : (
       <button className="button-block post-previous" onClick={() => this.handleGotoPost(this.props.post.previous)}>
-        <i className="fa fa-chevron-left"></i>Previous: {this.props.post.previous.title}
+        <i className="fa fa-chevron-left"></i>{this.props.post.previous.title}
       </button>);
   }
   getSupplementaryPrevious(){
@@ -90,7 +90,7 @@ export default class PostNavigation extends React.Component {
   getNext(){
     return !this.hasNext() ? undefined : (
       <button className="button button-block post-next" onClick={() => this.handleGotoPost(this.props.post.next)}>
-        Next: {this.props.post.next.title} <i className="fa fa-chevron-right"></i>
+        {this.props.post.next.title} <i className="fa fa-chevron-right"></i>
     </button>);
   }
   getSupplementaryNext(){
