@@ -35,7 +35,6 @@ var renderedOnServer = true;
 
 let onUpdate = function() {
   if (!renderedOnServer && process.env.BROWSER) {
-
     //slide up except when going to or from a picture
     if (hadPicture !== true && !this.state.params.picture) {
       window.scrollTo(0, 0);

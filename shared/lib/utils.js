@@ -30,7 +30,10 @@ let Utils = {
   },
   //prefix the URL with a host if this runs on the server (necessary as relative URLs naturally cannot suffice)
   normalizeUrl(url) {
-    return process.env.BROWSER ? url : `http://${process.env.HOST}${url.startsWith('/') ? '' : '/'}${url}`;
+    return process.env.BROWSER ? url : Utils.absoluteUrl(url);
+  },
+  absoluteUrl(url){
+    return `http://${process.env.BROWSER ? document.domain : process.env.HOST}${url.startsWith('/') ? '' : '/'}${url}`;
   },
   //get coordinations
   getCoords(element) {

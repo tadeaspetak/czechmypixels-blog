@@ -76,7 +76,7 @@ export default class Post extends React.Component {
             {property: "og:type", content: "article"},
             {property: "og:title", content: this.getPost().title},
             {property: "og:description", content: this.getPost().excerpt},
-            {property: "og:image", content: `${this.getPost().banner ? Utils.normalizeUrl(this.getPost().banner.content) : ''}`},
+            {property: "og:image", content: `${this.getPost().banner ? Utils.absoluteUrl(this.getPost().banner.content) : ''}`},
             {property: "og:image:width", content: `${this.getPost().banner ? this.getPost().banner.width : 0}`},
             {property: "og:image:height", content: `${this.getPost().banner ? this.getPost().banner.height : 0}`},
           ]} />

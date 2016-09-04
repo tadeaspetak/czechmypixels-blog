@@ -48,7 +48,9 @@ export default class Home extends React.Component {
             {property: "og:type", content: "article"},
             {property: "og:title", content: "Czech My Pixels"},
             {property: "og:description", content: "Pictures and scribbles from some of our travels 'round this blue planet."},
-            {property: "og:image", content: "http://czechmypixels/pictures/2015-12-15-cu-chi-tunnels/IMG_6038_colourBanner.jpg"}
+            {property: "og:image", content: Utils.absoluteUrl('/media/header-fb.jpg')},
+            {property: "og:image:width", content: 3000},
+            {property: "og:image:height", content: 1575}
           ]}/>
         <div className="container">
           <div className="post-stubs">{this.getStubs().valueSeq().map(stub => <PostStub key={stub.id} dispatch={this.props.dispatch} stub={stub}/>)}</div>

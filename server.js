@@ -90,10 +90,10 @@ app.use((req, res) => {
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <!-- TODO: keywords and description -->
-            <meta name="keywords" content="">
-            <meta name="description" content="">
-            <meta name="author" content="Tadeas Petak <tadeaspetak@gmail.com>">
+            <meta name="keywords" content="travelling, travels, hiking, pictures, photos, trips">
+            <meta name="description" content="Pictures and scribbles from some of our travels 'round this blue planet.">
+            <meta name="author" content="Marie Malá, Tadeáš Peták">
+            <meta name="contact" content="tadeaspetak@gmail.com">
 
             ${head.meta.toString()}
 
