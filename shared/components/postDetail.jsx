@@ -58,7 +58,8 @@ export default class PostDetail extends React.Component {
           post={this.props.post} />
         <PostNavigation
           dispatch={this.props.dispatch}
-          post={this.props.post}/>
+          post={this.props.post}
+          posts={this.props.posts}/>
       </div>
     </div>)
   }

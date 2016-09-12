@@ -64,9 +64,12 @@ export default class PostNavigation extends React.Component {
   //as only parameter in the route is changing, the loading needs to be handled manually
   handleGotoPost(post){
     nprogress.start();
-    this.props.dispatch(PostActions.getPost(post.slug)).then(() => {
-      this.context.router.push(`post/${post.slug}`);
-      nprogress.done();
+    this.props.dispatch(PostActions.getPost(post.slug)).then(loaded => {
+      //load the banner first, feels much smoother then
+      Utils.loadImage(this.props.posts.get(post.slug).banner.content).then(() => {
+        this.context.router.push(`post/${post.slug}`);
+        nprogress.done();
+      });
     });
   }
   hasPrevious(){
