@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import moment from 'moment';
 import PostGallery from 'components/postGallery.jsx';
 import PostNavigation from 'components/postNavigation.jsx';
+import Image from 'components/image.jsx';
 
 /**
  * Post detail showing the banner, post content and also requiring its
@@ -37,7 +38,7 @@ export default class PostDetail extends React.Component {
     return (<div>
       {/* banner, outside of the actual post container (so that it can be full width) */}
       <div className="banner" style={{backgroundImage: this.props.post.banner ? `url("${Utils.getDensityAwareUrl(this.props.post.banner.banner)}")` : false}} />
-      <img className="banner" alt="" src={this.props.post.banner ? Utils.getDensityAwareUrl(this.props.post.banner.banner) : ''} />
+      <Image className="banner" alt="" src={this.props.post.banner ? Utils.getDensityAwareUrl(this.props.post.banner.banner) : ''} />
       <div id="post-container" className="container">
         <article id="post-contents" className="post">
           <div className="post-meta">
@@ -58,8 +59,7 @@ export default class PostDetail extends React.Component {
           post={this.props.post} />
         <PostNavigation
           dispatch={this.props.dispatch}
-          post={this.props.post}
-          posts={this.props.posts}/>
+          post={this.props.post}/>
       </div>
     </div>)
   }

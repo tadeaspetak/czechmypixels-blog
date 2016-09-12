@@ -65,11 +65,8 @@ export default class PostNavigation extends React.Component {
   handleGotoPost(post){
     nprogress.start();
     this.props.dispatch(PostActions.getPost(post.slug)).then(loaded => {
-      //load the banner first, feels much smoother then
-      Utils.loadImage(Utils.getDensityAwareUrl(this.props.posts.get(post.slug).banner.banner)).then(() => {
-        this.context.router.push(`post/${post.slug}`);
-        nprogress.done();
-      });
+      this.context.router.push(`post/${post.slug}`);
+      nprogress.done();
     });
   }
   hasPrevious(){
