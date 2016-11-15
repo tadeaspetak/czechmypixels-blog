@@ -8,13 +8,11 @@ import classnames from 'classnames';
 export default class Modal extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      isOpen: props.isOpen || false
-    };
+    this.state = {isOpen: props.isOpen || false};
     this.keyDownHandler = this.onKeyDown.bind(this);
   }
   onKeyDown(event){
-    //close on ESC
+    // close on ESC
     if(event.which === 27){
       this.requestClose();
     }
@@ -42,7 +40,7 @@ export default class Modal extends React.Component {
     }
   }
   onClick(event){
-    //the overlay has been clicked
+    // the overlay has been clicked
     if(event.target.className.split(' ').indexOf('modal') > -1){
       this.props.onRequestClose();
     }

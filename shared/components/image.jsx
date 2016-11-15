@@ -1,12 +1,7 @@
 import React from 'react';
-import Utils from 'lib/utils';
-import classnames from 'classnames';
-import moment from 'moment';
-import PostGallery from 'components/postGallery.jsx';
-import PostNavigation from 'components/postNavigation.jsx';
 
 /**
- * When image src is updated, new image is not shown until fully loaded
+ * TODO: When image src is updated, new image is not shown until fully loaded
  * which is confusing e.g. when navigating between posts.
  */
 

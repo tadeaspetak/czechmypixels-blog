@@ -5,11 +5,6 @@ import axios from 'axios';
 import classnames from 'classnames';
 import nprogress from 'nprogress';
 
-/**
- * Component used for sending emails to us.
- * Rendered into a simple modal dialog.
- */
-
 export default class Contact extends React.Component {
   constructor(props) {
     super(props);
@@ -17,13 +12,8 @@ export default class Contact extends React.Component {
   }
   getInitState(){
     return {
-      email: '',
-      name: '',
-      message: '',
-      response: {
-        message: '',
-        type: ''
-      },
+      email: '', name: '', message: '',
+      response: {message: '', type: ''},
       isOpen: false
     };
   }
@@ -33,28 +23,15 @@ export default class Contact extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     nprogress.start();
-    axios.post('/api/v1/contact', {
-      name: this.state.name,
-      email: this.state.email,
-      message: this.state.message
-    }).then(response => {
+    axios.post('/api/v1/contact', {name: this.state.name, email: this.state.email, message: this.state.message})
+      .then(response => {
       this.setState({
-        name: '',
-        email: '',
-        message: '',
-        response: {
-          message: response.data.status.message,
-          type: 'success'
-        }
+        name: '', email: '', message: '',
+        response: {message: response.data.status.message, type: 'success'}
       });
       nprogress.done();
     }).catch(error => {
-      this.setState({
-        response: {
-          message: error.data.status.message,
-          type: 'error'
-        }
-      });
+      this.setState({response: {message: error.data.status.message, type: 'error'}});
       nprogress.done();
     });
   }

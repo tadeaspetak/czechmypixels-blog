@@ -1,11 +1,13 @@
-import React from 'react';
 const _ = require('lodash');
-import * as PostActions from 'actions/PostActions';
-import nprogress from 'nprogress';
-import Utils from 'lib/utils';
 import classnames from 'classnames';
 import moment from 'moment';
-import FunkyGallery from 'lib/FunkyGallery';
+import nprogress from 'nprogress';
+
+import React from 'react';
+
+import * as PostActions from '../actions/PostActions';
+import Utils from '../lib/utils';
+import FunkyGallery from '../lib/FunkyGallery';
 
 /**
  * Post gallery showing thumbnail images in a funky way.
@@ -82,7 +84,7 @@ export default class PostGallery extends React.Component {
     nprogress.start();
     Utils.loadImage(Utils.getDensityAwareUrl(picture.content)).then(() => {
       this.props.dispatch(PostActions.changePicture('none'));
-      this.context.router.push(`post/${this.props.post.slug}/${picture.name}`);
+      this.context.router.push(`/post/${this.props.post.slug}/${picture.name}`);
       nprogress.done();
     });
   }

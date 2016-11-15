@@ -61,6 +61,19 @@ let Utils = {
       top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop,
       left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft
     }
+  },
+  requestFullscreen(element){
+    return (element.requestFullscreen ||
+      element.mozRequestFullScreen ||
+      element.webkitRequestFullScreen ||
+      element.msRequestFullscreen).bind(element)();
+  },
+  exitFullscreen(element){
+    return (el.exitFullscreen ||
+      el.mozExitFullScreen ||
+      el.webkitExitFullscreen ||
+      el.msExitFullscreen
+    ).bind(element)();
   }
 };
 

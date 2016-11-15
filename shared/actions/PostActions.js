@@ -1,16 +1,11 @@
-import request from 'axios';
-import Utils from 'lib/utils';
-
-/**
- * Post actions.
- */
-
+import axios from 'axios';
+import Utils from '../lib/utils';
 
 //get post details from the given slug
 export function getPost(slug) {
   return {
     type: 'GET_POST',
-    promise: request.get(Utils.normalizeUrl(`api/v1/posts/${slug}`))
+    promise: axios.get(Utils.normalizeUrl(`/api/v1/posts/${slug}`))
   }
 }
 

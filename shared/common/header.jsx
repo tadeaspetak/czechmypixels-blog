@@ -3,10 +3,6 @@ import About from '../components/about.jsx';
 import Subscribe from '../components/subscribe.jsx';
 import Search from '../components/search.jsx';
 
-/**
- * Page header.
- */
-
 export default class Header extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired

@@ -1,8 +1,10 @@
-import React from 'react';
-import Modal from './modal.jsx';
 import axios from 'axios';
 import classnames from 'classnames';
 import nprogress from 'nprogress';
+
+import React from 'react';
+
+import Modal from './modal.jsx';
 
 /**
  * Component used for subscribing users to the newsletter.

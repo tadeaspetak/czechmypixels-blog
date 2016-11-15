@@ -1,10 +1,6 @@
 import React from 'react';
 import Contact from '../components/contact.jsx';
 
-/**
- * Page footer.
- */
-
 export default class Footer extends React.Component {
   render() {
     return <footer>

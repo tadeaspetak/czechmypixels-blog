@@ -1,13 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { needs } from 'lib/needs';
-import * as PostStubActions from 'actions/PostStubActions';
-import Helmet from 'react-helmet';
-import PostStub from 'components/postStub';
 import classnames from 'classnames';
-import nprogress from 'nprogress';
 import { Map } from 'immutable';
-import Utils from 'lib/utils';
+import nprogress from 'nprogress';
+
+import React from 'react';
+import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
+
+import { needs } from '../lib/needs';
+import * as PostStubActions from '../actions/PostStubActions';
+import PostStub from '../components/postStub';
+import Utils from '../lib/utils';
 
 /**
  * Home page.

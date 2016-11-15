@@ -1,10 +1,12 @@
-import React from 'react';
-import Utils from 'lib/utils';
 import classnames from 'classnames';
 import moment from 'moment';
-import PostGallery from 'components/postGallery.jsx';
-import PostNavigation from 'components/postNavigation.jsx';
-import Image from 'components/image.jsx';
+
+import React from 'react';
+
+import Image from './image.jsx';
+import PostGallery from './postGallery.jsx';
+import PostNavigation from './postNavigation.jsx';
+import Utils from '../lib/utils';
 
 /**
  * Post detail showing the banner, post content and also requiring its
@@ -58,6 +60,7 @@ export default class PostDetail extends React.Component {
           dispatch={this.props.dispatch}
           post={this.props.post} />
         <PostNavigation
+          postContents={this.refs.postContents}
           dispatch={this.props.dispatch}
           post={this.props.post}/>
       </div>

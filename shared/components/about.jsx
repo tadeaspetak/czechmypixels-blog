@@ -1,10 +1,6 @@
 import React from 'react';
 import Modal from './modal.jsx';
 
-/**
- * Short & sweet about in a modal dialog.
- */
-
 export default class About extends React.Component {
   constructor(props) {
     super(props);

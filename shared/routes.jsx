@@ -1,15 +1,10 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
-import App from 'app';
 
-//pages
-import Home from 'pages/home';
-import Post from 'pages/post';
-import Picture from 'pages/picture';
-
-/**
- * Route definitions.
- */
+import App from './app';
+import Home from './pages/home';
+import Post from './pages/post';
+import Picture from './pages/picture';
 
 export default(
   <Route name="app" component={App} path ="/">

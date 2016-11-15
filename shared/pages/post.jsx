@@ -1,14 +1,17 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {needs} from 'lib/needs';
-import * as PostActions from 'actions/PostActions';
-import { Map } from 'immutable';
-import Helmet from 'react-helmet';
 import classnames from 'classnames';
+import { Map } from 'immutable';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Helmet from 'react-helmet';
+import {connect} from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Swipeable from 'react-swipeable';
-import Utils from 'lib/utils';
-import PostDetail from 'components/postDetail';
+
+import {needs} from '../lib/needs';
+import PostDetail from '../components/postDetail';
+import * as PostActions from '../actions/PostActions';
+import Utils from '../lib/utils';
 
 /**
  * Post detail.
@@ -66,6 +69,10 @@ export default class Post extends React.Component {
   componentWillUnmount(){
     window.removeEventListener('keyup', this.onKeyup);
   }
+  handleFullscreen(e){
+    if(e) e.stopPropagation(e);
+    Utils.requestFullscreen(ReactDOM.findDOMNode(this.refs.swipeable));
+  }
   render() {
     return(
       <main className="post">
@@ -82,6 +89,7 @@ export default class Post extends React.Component {
           ]} />
         {/* picture navigation */}
         <Swipeable
+          ref="swipeable"
           className={classnames('modal-pictures', this.props.params.picture ? 'visible' : 'hidden')}
           onSwipedRight={() => this.handleGotoPrevious()}
           onSwipedLeft={() => this.handleGotoNext()}
@@ -89,6 +97,7 @@ export default class Post extends React.Component {
           <a className="picture-previous" onClick={e => this.handleGotoPrevious(e)}><i className="fa fa-angle-left"></i></a>
           <a className="picture-next" onClick={e => this.handleGotoNext(e)}><i className="fa fa-angle-right"></i></a>
           <a className="picture-close" onClick={e => this.click(e)}><i className="fa fa-times"></i></a>
+          <a className="picture-fullscreen" onClick={e => this.handleFullscreen(e)}><i className="fa fa-arrows-alt"></i></a>
           <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
             {this.props.children ? React.cloneElement(this.props.children, {
               key: this.props.location.pathname,

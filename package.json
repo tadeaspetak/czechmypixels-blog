@@ -4,14 +4,14 @@
   "description": "Czech My Pixels: Blog.",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack -p --progress --color --config webpack.config.js",
-    "dev": "NODE_PATH=$NODE_PATH:./shared node --harmony .",
-    "prod": "NODE_ENV=production NODE_PATH=$NODE_PATH:./shared node --harmony ."
+    "build": "NODE_ENV=prod webpack -p --progress --color",
+    "dev": "NODE_ENV=dev node --harmony .",
+    "prod": "NODE_ENV=prod node --harmony ."
   },
   "author": "Tadeas Petak <tadeaspetak@gmail.com>",
   "license": "ISC",
   "dependencies": {
-
+    "clean-webpack-plugin": "^0.1.14"
   },
   "devDependencies": {
     "axios": "^0.12.0",

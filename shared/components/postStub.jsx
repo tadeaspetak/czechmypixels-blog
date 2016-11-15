@@ -1,8 +1,9 @@
-import utils from 'lib/utils';
-import React from 'react';
-import * as PostActions from 'actions/PostActions';
 import nprogress from 'nprogress';
-import Utils from 'lib/utils';
+
+import React from 'react';
+
+import * as PostActions from '../actions/PostActions';
+import Utils from '../lib/utils';
 
 /**
  * Post stub shown on the home page and when filtering.
@@ -17,7 +18,7 @@ export default class PostStub extends React.Component {
     nprogress.start();
     this.props.dispatch(PostActions.getPost(this.props.stub.slug)).then(() => {
       this.props.dispatch(PostActions.setPreloaded(this.props.stub.slug, true));
-      this.context.router.push(`post/${this.props.stub.slug}`);
+      this.context.router.push(`/post/${this.props.stub.slug}`);
       nprogress.done();
     });
   }

@@ -1,9 +1,9 @@
 @import 'common';
 .modal-pictures {
   //don't display navigational icons on smaller displays
-  .picture-previous, .picture-next, .picture-close{
+  .picture-previous, .picture-next, .picture-close, .picture-fullscreen{
     display:none;
-    color: #999;
+    color: #555;
     text-decoration: none;
     &:hover{
       color: #fff;
@@ -148,6 +148,18 @@
       i.fa{
         font-size: 20px;
         padding: 10px 15px 80px 80px;
+      }
+    }
+
+    .picture-fullscreen{
+      display:inline-block;
+      position:absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      i.fa{
+        font-size: 20px;
+        padding: 10px 80px 80px 15px;
       }
     }
   }

@@ -1,8 +1,11 @@
 import _  from 'lodash';
-import React from 'react';
-import * as PostActions from 'actions/PostActions';
 import nprogress from 'nprogress';
-import Utils from 'lib/utils';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import * as PostActions from '../actions/PostActions';
+import Utils from '../lib/utils';
 
 /**
  * Post navigation.
@@ -51,7 +54,7 @@ export default class PostNavigation extends React.Component {
     let contents = document.getElementById('post-contents');
     let contentsCoords = Utils.getCoords(contents);
     let scroll = Utils.getScroll();
-    let navigation = document.getElementById('post-navigation-main');
+    let navigation = this.refs.postNavigationMain;
 
     if(contentsCoords.top > scroll.top){
       return {position: 'absolute', top: `10px`, left: `0px`};
@@ -65,7 +68,7 @@ export default class PostNavigation extends React.Component {
   handleGotoPost(post){
     nprogress.start();
     this.props.dispatch(PostActions.getPost(post.slug)).then(loaded => {
-      this.context.router.push(`post/${post.slug}`);
+      this.context.router.push(`/post/${post.slug}`);
       nprogress.done();
     });
   }
@@ -102,7 +105,7 @@ export default class PostNavigation extends React.Component {
   render() {
     return (<div className="post-navigation">
       {/* main navigation */}
-      <nav id="post-navigation-main" style={this.state.style.position ? {
+      <nav ref="postNavigationMain" style={this.state.style.position ? {
           position: this.state.style.position,
           top: this.state.style.top,
           left: this.state.style.left

@@ -1,11 +1,13 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import * as PostActions from 'actions/PostActions';
-import { Map } from 'immutable';
 import classnames from 'classnames';
+import { Map } from 'immutable';
 import nprogress from 'nprogress';
+
+import React from 'react';
 import Helmet from 'react-helmet';
-import Utils from 'lib/utils';
+import {connect} from 'react-redux';
+
+import * as PostActions from '../actions/PostActions';
+import Utils from '../lib/utils';
 
 /**
  * Picture detail.
@@ -73,7 +75,7 @@ export default class Picture extends React.Component {
       Utils.loadImage(Utils.getDensityAwareUrl(next.content)).then(image => {
         this.props.dispatch(PostActions.changePicture('next'));
         this.setState({leavingForNext: true});
-        this.context.router.push(`post/${this.props.params.slug}/${next.name}`);
+        this.context.router.push(`/post/${this.props.params.slug}/${next.name}`);
 
         nprogress.done();
       });
@@ -88,7 +90,7 @@ export default class Picture extends React.Component {
       Utils.loadImage(Utils.getDensityAwareUrl(previous.content)).then(image => {
         this.props.dispatch(PostActions.changePicture('previous'));
         this.setState({leavingForPrevious: true});
-        this.context.router.push(`post/${this.props.params.slug}/${previous.name}`);
+        this.context.router.push(`/post/${this.props.params.slug}/${previous.name}`);
 
         nprogress.done();
       });
@@ -98,7 +100,7 @@ export default class Picture extends React.Component {
   }
   close(){
     document.title = this.props.posts.get(this.props.params.slug).title;
-    this.context.router.push(`post/${this.props.params.slug}`);
+    this.context.router.push(`/post/${this.props.params.slug}`);
   }
   handleKeyup(e){
     if(this.keyMap.has(e.keyCode)){
