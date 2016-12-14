@@ -3,9 +3,9 @@ import moment from 'moment';
 
 import React from 'react';
 
-import Image from './image.jsx';
-import PostGallery from './postGallery.jsx';
-import PostNavigation from './postNavigation.jsx';
+import Image from './image';
+import PostGallery from './postGallery';
+import PostNavigation from './postNavigation';
 import Utils from '../lib/utils';
 
 /**
@@ -17,21 +17,33 @@ export default class PostDetail extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
-  constructor(props){
+  static propTypes = {
+    dispatch: React.PropTypes.func,
+    post: React.PropTypes.shape({
+      banner: React.PropTypes.shape({
+        banner: React.PropTypes.string
+      }),
+      contentHtml: React.PropTypes.string,
+      published: React.PropTypes.string,
+      title: React.PropTypes.string
+    })
+  }
+  constructor(props) {
     super(props);
     this.state = {
       isShownFull: false,
       isReadOnNecessary: false
     };
   }
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.resolveReadOn();
   }
-  resolveReadOn(){
-    //execute only on client
-    /*if(process.env.BROWSER){
+  resolveReadOn() {
+    // execute only on client
+    /* if(process.env.BROWSER){
       let postBody = document.getElementsByClassName("post-body")[0];
-      if(postBody && this.state.isReadOnNecessary !== postBody.scrollHeight > postBody.offsetHeight){
+      if(postBody &&
+       this.state.isReadOnNecessary !== postBody.scrollHeight > postBody.offsetHeight){
         this.setState({isReadOnNecessary: postBody.scrollHeight > postBody.offsetHeight});
       }
     }*/
@@ -39,7 +51,7 @@ export default class PostDetail extends React.Component {
   render() {
     return (<div>
       {/* banner, outside of the actual post container (so that it can be full width) */}
-      <div className="banner" style={{backgroundImage: this.props.post.banner ? `url("${Utils.getDensityAwareUrl(this.props.post.banner.banner)}")` : false}} />
+      <div className="banner" style={{ backgroundImage: this.props.post.banner ? `url("${Utils.getDensityAwareUrl(this.props.post.banner.banner)}")` : false }} />
       <Image className="banner" alt="" src={this.props.post.banner ? Utils.getDensityAwareUrl(this.props.post.banner.banner) : ''} />
       <div id="post-container" className="container">
         <article id="post-contents" className="post">
@@ -50,20 +62,25 @@ export default class PostDetail extends React.Component {
             </span>
           </div>
           <div
-            className={classnames('post-body', {'full': this.state.isShownFull})}
-            dangerouslySetInnerHTML={{__html: this.props.post.contentHtml}}></div>
-          {/* <div className={classnames('show-more', {'visible': !this.state.isShownFull && this.state.isReadOnNecessary})}>
-            <a className="button show-more" onClick={() => this.setState({isShownFull: true})}><i className="fa fa-level-down" />... read on!</a>
+            className={classnames('post-body', { full: this.state.isShownFull })}
+            dangerouslySetInnerHTML={{ __html: this.props.post.contentHtml }}
+          />
+          {/* <div className={classnames('show-more',
+            {'visible': !this.state.isShownFull && this.state.isReadOnNecessary})}>
+            <a className="button show-more" onClick={() => this.setState({isShownFull: true})}>
+            <i className="fa fa-level-down" />... read on!</a>
           </div> */}
         </article>
         <PostGallery
           dispatch={this.props.dispatch}
-          post={this.props.post} />
+          post={this.props.post}
+        />
         <PostNavigation
           postContents={this.refs.postContents}
           dispatch={this.props.dispatch}
-          post={this.props.post}/>
+          post={this.props.post}
+        />
       </div>
-    </div>)
+    </div>);
   }
 }

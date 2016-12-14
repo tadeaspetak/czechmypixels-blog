@@ -7,10 +7,14 @@ import React from 'react';
  */
 
 export default class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <span className="search">
-        <i className="fa fa-search"></i>
+        <i className="fa fa-search" />
         <input type="text" placeholder="Search me..." />
       </span>
     );

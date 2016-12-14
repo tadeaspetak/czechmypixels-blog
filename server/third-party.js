@@ -1,4 +1,4 @@
-export function piwik(analytics){
+export function piwik(analytics) {
   return `<!-- Piwik -->
   <script type="text/javascript">
     var _paq = window._paq = _paq || [];
@@ -13,5 +13,9 @@ export function piwik(analytics){
     })();
   </script>
   <noscript><p><img src="//${analytics}/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-  <!-- End Piwik Code -->`
+  <!-- End Piwik Code -->`;
+}
+
+export function funny() {
+  return '';
 }

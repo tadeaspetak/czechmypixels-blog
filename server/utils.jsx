@@ -1,12 +1,12 @@
 import transit from 'transit-immutable-js';
 
 import React from 'react';
-import {renderToString} from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import Helmet from 'react-helmet';
-import {Provider} from 'react-redux';
-import {RouterContext} from 'react-router';
+import { Provider } from 'react-redux';
+import { RouterContext } from 'react-router';
 
-const {piwik} = require('./third-party');
+const { piwik } = require('./third-party');
 
 /**
  * Fetch component data.
@@ -19,12 +19,12 @@ const {piwik} = require('./third-party');
  */
 
 export function fetchComponentData(store, props) {
-  const needs = props.components.reduce((previous, component) => {
-    return (component.needs || []).map(need => need(props))
-      .concat(((component.WrappedComponent ? component.WrappedComponent.needs : []) || []).map(need => need(props)))
-      .concat(previous);
-  }, []);
-  return Promise.all(needs.map(need => store.dispatch(need)));
+  const dependencies = props.components.reduce((previous, component) =>
+    (component.dependencies || []).map(dependency => dependency(props)).concat(
+        ((component.WrappedComponent ? component.WrappedComponent.dependencies : []) || [])
+          .map(dependency => dependency(props))
+      ).concat(previous), []);
+  return Promise.all(dependencies.map(need => store.dispatch(need)));
 }
 
 /**
@@ -32,10 +32,10 @@ export function fetchComponentData(store, props) {
  */
 
 export function renderPage(store, props) {
-  return new Promise((resolve, reject) => {
-    let app = renderToString((<Provider store={store}><RouterContext {...props}/></Provider>));
-    let head = Helmet.rewind();
-    let html = `
+  return new Promise((resolve) => {
+    const app = renderToString((<Provider store={store}><RouterContext {...props} /></Provider>));
+    const head = Helmet.rewind();
+    const html = `
     <!doctype html>
     <html>
       <head>

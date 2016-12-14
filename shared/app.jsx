@@ -1,15 +1,20 @@
 import React from 'react';
-import Header from './common/header.jsx';
-import Footer from './common/footer.jsx';
+import Header from './common/header';
+import Footer from './common/footer';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div className="site">
-        <Header />
-        {this.props.children}
-        <Footer />
-      </div>
-    )
-  }
+export default function App(props) {
+  return (
+    <div className="site">
+      <Header />
+      {props.children}
+      <Footer />
+    </div>
+  );
 }
+
+App.propTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
+};

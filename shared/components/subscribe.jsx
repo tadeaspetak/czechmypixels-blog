@@ -4,7 +4,7 @@ import nprogress from 'nprogress';
 
 import React from 'react';
 
-import Modal from './modal.jsx';
+import Modal from 'react-simple-modal';
 
 /**
  * Component used for subscribing users to the newsletter.
@@ -12,11 +12,7 @@ import Modal from './modal.jsx';
  */
 
 export default class Subscribe extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitState();
-  }
-  getInitState(){
+  static getInitState() {
     return {
       email: '',
       response: {
@@ -26,16 +22,22 @@ export default class Subscribe extends React.Component {
       isOpen: false
     };
   }
-  close() {
-    this.setState(this.getInitState())
+  constructor(props) {
+    super(props);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = Subscribe.getInitState();
   }
-  handleSubmit(e){
+  handleClose() {
+    this.setState(Subscribe.getInitState());
+  }
+  handleSubmit(e) {
     e.preventDefault();
     nprogress.start();
 
     axios.post('/api/v1/subscribers', {
       email: this.state.email
-    }).then(response => {
+    }).then((response) => {
       this.setState({
         email: '',
         response: {
@@ -44,7 +46,7 @@ export default class Subscribe extends React.Component {
         }
       });
       nprogress.done();
-    }).catch(error => {
+    }).catch((error) => {
       this.setState({
         response: {
           message: error.data.status.message,
@@ -57,15 +59,15 @@ export default class Subscribe extends React.Component {
   render() {
     return (
       <span>
-        <a className="button button-green" onClick={() => this.setState({isOpen: true})}>
-          <i className="fa fa-rss"></i>Subscribe
+        <a className="button button-green" onClick={() => this.setState({ isOpen: true })}>
+          <i className="fa fa-rss" />Subscribe
         </a>
-        <Modal isOpen={this.state.isOpen} onRequestClose={this.close.bind(this)}>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+        <Modal isOpen={this.state.isOpen} onRequestClose={this.handleClose}>
+          <form onSubmit={this.handleSubmit}>
             <div>
               <div className="modal-header">
-                <h1><i className="fa fa-rss"></i>Subscribe to new posts</h1>
-                <a className="modal-closer" title="Close me" onClick={this.close.bind(this)}>&times;</a>
+                <h4 className="modal-heading"><i className="fa fa-rss" />Subscribe to new posts</h4>
+                <span className="modal-closer" title="Close me" onClick={this.handleClose}>&times;</span>
               </div>
               <div className="modal-body">
                 <p>
@@ -73,21 +75,22 @@ export default class Subscribe extends React.Component {
                   time there is a new interesting something on <em>Czech My Pixels</em>.
                 </p>
                 <p>
-                  <strong>No way on earth would we ever spam someone like you or share your address with anyone!</strong>
+                  <strong>No way on earth would we ever spam someone
+                    like you or share your address with anyone!</strong>
                 </p>
-                <input type="email" value={this.state.email} onChange={e => this.setState({email: e.target.value})} placeholder="john@doe.com" />
+                <input type="email" value={this.state.email} onChange={e => this.setState({ email: e.target.value })} placeholder="john@doe.com" />
                 <p className={classnames('server-response', this.state.response.type ? this.state.response.type : 'hidden')}>{this.state.response.message}</p>
               </div>
               <div className="modal-footer">
-                <button type="button" onClick={this.close.bind(this)}>Close me</button>
+                <button type="button" onClick={this.handleClose}>Close me</button>
                 <button type="submit" className="button-green" disabled={!this.state.email}>
-                  <i className="fa fa-rss"></i>Subscribe
+                  <i className="fa fa-rss" />Subscribe
                 </button>
               </div>
             </div>
           </form>
         </Modal>
       </span>
-    )
+    );
   }
 }

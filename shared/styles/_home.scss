@@ -1,26 +1,25 @@
 @import 'common';
-/**
- * Home page.
- */
+
 main.home {
   .container {
     .post-stubs {
+      margin: 1.5rem auto;
       .post-stub {
         @include clearfix();
         border-radius: 3px;
         box-shadow: 0 0 4px rgba(0,0,0,.5);
         color: white;
         cursor: pointer;
-        margin: 1.5rem auto;
-        padding: 0 0 1rem;
+        margin: 0 auto 1.5rem;
+        padding: 0;
         position: relative;
         text-align: left;
         // smallest screens
-        background-size: 576px 120px;
+        background-size: 300px 300px;
         background-position: center;
         background-repeat: no-repeat;
-        height: 120px;
-        width: 100%;
+        height: 300px;
+        width: 300px;
         // the name and (potentially) description of an album should be shown on a semi-opaque dark background at the bottom of the stub
         .post-stub-contents {
           position: absolute;
@@ -28,13 +27,13 @@ main.home {
           bottom: 0;
           left: 0;
           background: rgba(0,0,0,.6);
-          padding: 0.5rem 1rem 1rem;
+          padding: 1rem 1rem;
           h2 {
             font-size: 1.1rem;
-            margin: 0 0 0.4rem;
+            margin: 0 0 .5remq;
           }
           .post-stub-body {
-            display: none;
+            //display: none;
           }
         }
       }
@@ -48,9 +47,17 @@ main.home {
   main.home {
     .container {
       .post-stubs {
+        @include clearfix();
+        width: 420px;
         .post-stub {
-          background-size: 768px 160px;
-          height: 160px;
+          background-size: 200px 200px;
+          float: left;
+          height: 200px;
+          margin: 0 20px 1.5rem 0;
+          width: 200px;
+          &:nth-of-type(2n + 0){
+            margin-right: 0;
+          }
           .post-stub-contents {
             .post-stub-body {
               display: block;
@@ -66,6 +73,21 @@ main.home {
 @media(min-width: $screen-medium){
   main.home{
     .container{
+      .post-stubs{
+        width: 730px;
+        .post-stub{
+          background-size: 230px 230px;
+          height: 230px;
+          margin-right: 20px;
+          width: 230px;
+          &:nth-of-type(2n + 0){
+            margin-right: 20px;
+          }
+          &:nth-of-type(3n + 0){
+            margin-right: 0;
+          }
+        }
+      }
       button.load-more{
         i.fa{
           font-size: 1em;
@@ -78,10 +100,15 @@ main.home {
   main.home {
     .container {
       .post-stubs {
+        width: 1110px;
         .post-stub {
-          background-size: 1200px 250px;
-          height: 250px;
-          padding: 0;
+          background-size: 350px 350px;
+          height: 350px;
+          margin-right: 30px;
+          width: 350px;
+          &:nth-of-type(2n + 0){
+            margin-right: 30px;
+          }
           .post-stub-contents {
             bottom: 10px;
             .post-stub-body {

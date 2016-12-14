@@ -3,6 +3,15 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 
+const includes =  [
+  path.resolve(__dirname, 'client'),
+  path.resolve(__dirname, 'server'),
+  path.resolve(__dirname, 'shared'),
+  path.resolve(__dirname, 'node_modules/font-awesome'),
+  path.resolve(__dirname, 'node_modules/react-simple-modal'),
+  path.resolve(__dirname, 'node_modules/nprogress')
+]
+
 // webpack production configuration
 var config = {
   entry: [path.resolve(__dirname, 'client')],
@@ -17,10 +26,10 @@ var config = {
   },
   module: {
     loaders: [
-      {test: /.jsx?$/, loader: 'babel', exclude: /node_modules/, query: {plugins: []}},
-      {test: /\.(s)?css$/, loader: ExtractTextPlugin.extract("style", "css!postcss!sass")},
-      {test: /\.(jpg|jpeg|gif|png|ico)$/, exclude: /node_modules/, loader: 'file?name=media/[name].[ext]'},
-      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file?name=fonts/[name].[ext]"}
+      {test: /.jsx?$/, loader: 'babel', include: includes, query: {plugins: []}},
+      {test: /\.(s)?css$/, include: includes, loader: ExtractTextPlugin.extract("style", "css!postcss!sass")},
+      {test: /\.(jpg|jpeg|gif|png|ico)$/, include: includes, loader: 'file?name=media/[name].[ext]'},
+      {test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, include: includes, loader: "file?name=fonts/[name].[ext]"}
     ]
   },
   plugins: [
@@ -34,10 +43,5 @@ var config = {
     })
   ]
 };
-
-/*query: {
-  presets: ['es2015', 'stage-0', 'react'],
-  plugins: ['transform-decorators-legacy']
-}*/
 
 module.exports = config;

@@ -14,6 +14,9 @@ export default function(app) {
     config.module.loaders[1].loader = 'style!css!postcss!sass';
     config.plugins.splice(0, 1);
 
+    // possibly speed up the dev build a background-position
+   config.resolve.unsafeCache = true;
+
     // react hot module reload
     config.module.loaders[0].query.plugins.push(['react-transform', {
         transforms: [{transform: 'react-transform-hmr', imports: ['react'], locals: ['module']}]

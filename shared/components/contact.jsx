@@ -1,75 +1,83 @@
 import React from 'react';
-import Modal from './modal.jsx';
+import Modal from 'react-simple-modal';
 
 import axios from 'axios';
 import classnames from 'classnames';
 import nprogress from 'nprogress';
 
 export default class Contact extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitState();
-  }
-  getInitState(){
+  static getInitState() {
     return {
-      email: '', name: '', message: '',
-      response: {message: '', type: ''},
-      isOpen: false
+      isOpen: false,
+      email: '',
+      name: '',
+      message: '',
+      response: { message: '', type: '' }
     };
   }
-  close() {
-    this.setState(this.getInitState())
+  constructor(props) {
+    super(props);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = Contact.getInitState();
   }
-  handleSubmit(e){
+  handleClose() {
+    this.setState(Contact.getInitState());
+  }
+  handleSubmit(e) {
     e.preventDefault();
     nprogress.start();
-    axios.post('/api/v1/contact', {name: this.state.name, email: this.state.email, message: this.state.message})
-      .then(response => {
+    axios.post('/api/v1/contact', {
+      name: this.state.name,
+      email: this.state.email,
+      message: this.state.message
+    }).then((response) => {
       this.setState({
-        name: '', email: '', message: '',
-        response: {message: response.data.status.message, type: 'success'}
+        name: '',
+        email: '',
+        message: '',
+        response: { message: response.data.status.message, type: 'success' }
       });
       nprogress.done();
-    }).catch(error => {
-      this.setState({response: {message: error.data.status.message, type: 'error'}});
+    }).catch((error) => {
+      this.setState({ response: { message: error.data.status.message, type: 'error' } });
       nprogress.done();
     });
   }
   render() {
     return (
       <span>
-        <a onClick={() => this.setState({isOpen: true})}>Marie Malá</a>
-        <Modal isOpen={this.state.isOpen} onRequestClose={this.close.bind(this)}>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+        <a onClick={() => this.setState({ isOpen: true })}>Marie Malá</a>
+        <Modal isOpen={this.state.isOpen} onRequestClose={this.handleClose}>
+          <form onSubmit={this.handleSubmit}>
             <div className="contact">
               <div className="modal-header">
-                <h1><i className="fa fa-send"></i>Send us a message</h1>
-                <a className="modal-closer" title="Close me" onClick={this.close.bind(this)}>&times;</a>
+                <h4 className="modal-heading"><i className="fa fa-send" />Send us a message</h4>
+                <span className="modal-closer" title="Close me" onClick={this.handleClose}>&times;</span>
               </div>
               <div className="modal-body">
                 <div>
                   <div className="form-group">
-                    <input type="text" id="contact-name" value={this.state.name} onChange={e => this.setState({name: e.target.value})} placeholder="Name" required />
+                    <input type="text" id="contact-name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} placeholder="Name" required />
                   </div>
                   <div className="form-group">
-                    <input type="email" id="contact-email" value={this.state.email} onChange={e => this.setState({email: e.target.value})} placeholder="E-mail" required />
+                    <input type="email" id="contact-email" value={this.state.email} onChange={e => this.setState({ email: e.target.value })} placeholder="E-mail" required />
                   </div>
                   <div className="form-group">
-                    <textarea rows="5" value={this.state.message} onChange={e => this.setState({message: e.target.value})} placeholder="Message" required></textarea>
+                    <textarea rows="5" value={this.state.message} onChange={e => this.setState({ message: e.target.value })} placeholder="Message" required />
                   </div>
                   <p className={classnames('server-response', this.state.response.type ? this.state.response.type : 'hidden')}>{this.state.response.message}</p>
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" onClick={this.close.bind(this)}>Close me</button>
-                <button type="submit" className="button-green" disabled={!this.state.email}>
-                  <i className="fa fa-send"></i>Send me
-                </button>
+                <button type="button" onClick={this.handleClose}>Close me</button>
+                <button type="submit" className="button-green" disabled={!this.state.email}><i className="fa fa-send" />Send me</button>
               </div>
             </div>
           </form>
         </Modal>
       </span>
-    )
+    );
   }
 }
