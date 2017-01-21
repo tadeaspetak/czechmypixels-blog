@@ -5,7 +5,11 @@ export default function Trips(props) {
   return (<div className="trips">
     <ul>
       <li className="home"><IndexLink activeClassName="current" to={'/'}>All Trips</IndexLink></li>
-      {props.trips.map(trip => (<li key={trip.id}><Link activeClassName="current" to={`/trip/${trip.slug}`}>{trip.title}</Link></li>))}
+      {props.trips
+        .filter(trip => trip.slug && trip.from && trip.to)
+        .map(trip =>
+          <li key={trip.id}><Link activeClassName="current" to={`/trip/${trip.slug}`}>{trip.title}</Link></li>
+      )}
     </ul>
   </div>
   );

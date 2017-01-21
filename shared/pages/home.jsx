@@ -27,7 +27,7 @@ export default class Home extends React.Component {
   handleLoadMore() {
     nprogress.start();
     this.setState({ loadingMore: true });
-    this.props.dispatch(getPostStubs(this.props.stubs.size)).then(() => {
+    this.props.dispatch(getPostStubs(this.props.stubs.length)).then(() => {
       this.setState({ loadingMore: false });
       nprogress.done();
     });
