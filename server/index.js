@@ -14,7 +14,7 @@ import { fetchComponentData, renderPage } from './utils';
 import devConfiguration from '../webpack.dev';
 
 const app = express();
-if (process.env.NODE_ENV !== 'prod') devConfiguration(app);
+if (process.env.NODE_ENV !== 'production') devConfiguration(app);
 
 app.use('/', express.static(path.join(__dirname, '../build')));
 app.use((req, res) => {

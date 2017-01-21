@@ -53,11 +53,11 @@ export function renderPage(store, props) {
 
         <link rel="icon" type="image/png" href="/media/favicon.ico">
         ${head.title.toString()}
-        ${process.env.NODE_ENV === 'prod' ? '<link rel="stylesheet" type="text/css" href="/screen.css">' : ''}
+        ${process.env.NODE_ENV === 'production' ? '<link rel="stylesheet" type="text/css" href="/screen.css">' : ''}
         <script type="application/javascript">
           window.state = ${transit.toJSON(store.getState())};
         </script>
-        ${piwik(process.env.NODE_ENV === 'prod' ? 'analytics.czechmypixels.com' : 'analytics.czechmypixels')}
+        ${piwik(process.env.NODE_ENV === 'production' ? 'analytics.czechmypixels.com' : 'analytics.czechmypixels')}
       </head>
       <body>
         <div id="app"><div>${app}</div></div>
