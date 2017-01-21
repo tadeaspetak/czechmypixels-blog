@@ -6,7 +6,7 @@ export default function Trips(props) {
     <ul>
       <li className="home"><IndexLink activeClassName="current" to={'/'}>All Trips</IndexLink></li>
       {props.trips
-        .filter(trip => trip.slug && trip.from && trip.to)
+        .filter(trip => parseInt(trip.postCount || trip.posts.length, 10) > 0)
         .map(trip =>
           <li key={trip.id}><Link activeClassName="current" to={`/trip/${trip.slug}`}>{trip.title} ({trip.postCount || trip.posts.length})</Link></li>
       )}
