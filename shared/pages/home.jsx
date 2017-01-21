@@ -67,7 +67,7 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
   dispatch: PropTypes.func,
-  stubs: PropTypes.arrayOf(),
+  stubs: PropTypes.arrayOf(PropTypes.shape()),
   total: PropTypes.number,
-  trips: PropTypes.arrayOf()
+  trips: PropTypes.arrayOf(PropTypes.shape())
 };

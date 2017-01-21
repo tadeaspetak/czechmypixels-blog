@@ -36,5 +36,5 @@ export default class Trip extends React.Component {
 Trip.propTypes = {
   stubs: PropTypes.arrayOf(),
   trip: PropTypes.shape({ descriptionHtml: PropTypes.string, title: PropTypes.string }),
-  trips: PropTypes.arrayOf()
+  trips: PropTypes.arrayOf(PropTypes.shape())
 };

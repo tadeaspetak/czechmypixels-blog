@@ -8,7 +8,7 @@ export default function Trips(props) {
       {props.trips
         .filter(trip => trip.slug && trip.from && trip.to)
         .map(trip =>
-          <li key={trip.id}><Link activeClassName="current" to={`/trip/${trip.slug}`}>{trip.title}</Link></li>
+          <li key={trip.id}><Link activeClassName="current" to={`/trip/${trip.slug}`}>{trip.title} ({trip.postCount || trip.posts.length})</Link></li>
       )}
     </ul>
   </div>
@@ -17,5 +17,6 @@ export default function Trips(props) {
 
 Trips.propTypes = {
   trips: PropTypes.arrayOf(PropTypes.shape({
+    postCount: PropTypes.string
   }))
 };
