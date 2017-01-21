@@ -19,12 +19,12 @@ const { piwik } = require('./third-party');
  */
 
 export function fetchComponentData(store, props) {
-  const dependencies = props.components.reduce((previous, component) =>
-    (component.dependencies || []).map(dependency => dependency(props)).concat(
-        ((component.WrappedComponent ? component.WrappedComponent.dependencies : []) || [])
-          .map(dependency => dependency(props))
+  const needs = props.components.reduce((previous, component) =>
+    (component.needs || []).map(need => need(props)).concat(
+        ((component.WrappedComponent ? component.WrappedComponent.needs : []) || [])
+          .map(need => need(props))
       ).concat(previous), []);
-  return Promise.all(dependencies.map(need => store.dispatch(need)));
+  return Promise.all(needs.map(need => store.dispatch(need)));
 }
 
 /**

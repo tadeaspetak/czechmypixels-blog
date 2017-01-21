@@ -33,7 +33,11 @@ export default class PostNavigation extends React.Component {
       previous: React.PropTypes.shape({
         title: React.PropTypes.string
       }),
-      slug: React.PropTypes.string
+      slug: React.PropTypes.string,
+      trip: React.PropTypes.shape({
+        id: React.PropTypes.number,
+        slug: React.PropTypes.string
+      })
     })
   }
   constructor(props) {
@@ -128,12 +132,16 @@ export default class PostNavigation extends React.Component {
         style={this.state.style.position ? {
           position: this.state.style.position,
           top: this.state.style.top,
-          left: this.state.style.left } : {}}
-      >
-        {this.getPrevious()}
-        {this.getNext()}
+          left: this.state.style.left } : {}}>
+        {this.props.post.trip.id !== 1 && <div>
+          {this.getPrevious()}
+          {this.getNext()}
+          <button className="button-block button-green post-all" onClick={() => this.context.router.push(`/trip/${this.props.post.trip.slug}`)}>
+            <i className="fa fa-map-signs" />All posts from the trip
+          </button>
+        </div>}
         <div className="latest">
-          <h2><i className="fa fa-pencil-square-o" />Latest posts</h2>
+          <h2><i className="fa fa-pencil-square-o" />Lately on the blog</h2>
           <ul>
             {this.props.post.latest.map(latest =>
               <li key={latest.id}>
@@ -142,19 +150,16 @@ export default class PostNavigation extends React.Component {
             )}
           </ul>
         </div>
-
-        <button className="button-block button-green post-all" onClick={() => this.context.router.push('/')}>
-          <i className="fa fa-map-signs" />Back to All Posts
-        </button>
       </nav>
       {/* supplementary navigation for larger screens */}
-      <div className="post-navigation-supplementary">
+      {this.props.post.trip.id !== 1 && <div className="post-navigation-supplementary">
         {this.getSupplementaryPrevious()}
         {this.getSupplementaryNext()}
-        <button className="button-green post-all" onClick={() => this.context.router.push('/')}>
-          <i className="fa fa-map-signs" />Back to All Posts
+        <button className="button-green post-all" onClick={() => this.context.router.push(`/trip/${this.props.post.trip.slug}`)}>
+          <i className="fa fa-map-signs" />All posts from the trip
         </button>
       </div>
+      }
     </div>);
   }
 }

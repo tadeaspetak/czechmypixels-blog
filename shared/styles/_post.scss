@@ -1,4 +1,4 @@
-@import 'common';
+@import 'utils';
 main.post {
   div.banner {
     background-position: center;
@@ -40,10 +40,10 @@ main.post {
           }
         }
         .post-all {
-          //margin-bottom: 1.5em;
+          margin-bottom: 2rem;
         }
         div.latest {
-          margin: 1em 0 1.5em;
+          margin: 0 0 1.5rem;
           text-align: center;
           h2 {
             border-bottom: 1px dotted #eee;

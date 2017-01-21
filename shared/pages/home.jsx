@@ -1,41 +1,33 @@
 import classnames from 'classnames';
-import { Map, OrderedMap } from 'immutable';
 import nprogress from 'nprogress';
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 
 import needs from '../lib/needs';
-import * as PostStubActions from '../actions/PostStubActions';
+import { getPostStubs } from '../actions/PostStubActions';
+import { getTrips } from '../actions/TripActions';
 import PostStub from '../components/postStub';
+import Trips from '../components/trips';
 import Utils from '../lib/utils';
 
-@connect(state => ({ postStubs: state.postStubs }))
-@needs([() => PostStubActions.getPostStubs()])
+@connect(state => ({
+  stubs: state.postStubs.get('stubs') ? state.postStubs.get('stubs').toArray() : [],
+  total: state.postStubs.get('total') || 0,
+  trips: state.trips.toArray() }))
+@needs([() => getPostStubs(), () => getTrips()])
 export default class Home extends React.Component {
-  static propTypes = {
-    dispatch: React.PropTypes.func,
-    postStubs: React.PropTypes.instanceOf(OrderedMap)
-  }
   constructor(params) {
     super(params);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.state = { loadingMore: false };
   }
-  // get all the stubs
-  getStubs() {
-    return this.props.postStubs.get('stubs') || new Map();
-  }
-  // get stub total
-  getTotal() {
-    return this.props.postStubs.get('total') || 0;
-  }
   // load more stubs
   handleLoadMore() {
     nprogress.start();
     this.setState({ loadingMore: true });
-    this.props.dispatch(PostStubActions.getPostStubs(this.getStubs().size)).then(() => {
+    this.props.dispatch(getPostStubs(this.props.stubs.size)).then(() => {
       this.setState({ loadingMore: false });
       nprogress.done();
     });
@@ -55,13 +47,27 @@ export default class Home extends React.Component {
           ]}
         />
         <div className="container">
-          <div className="post-stubs">{this.getStubs().valueSeq().map(stub => <PostStub key={stub.id} dispatch={this.props.dispatch} stub={stub} />)}</div>
+          <div className="post-stubs">
+            {this.props.stubs.map(stub =>
+              <PostStub key={stub.id} dispatch={this.props.dispatch} stub={stub} />)
+            }
+          </div>
           <button
-            className={classnames('load-more', 'button-block', 'button-green', { hidden: this.getStubs().size >= this.getTotal() })}
-            onClick={this.handleLoadMore} disabled={this.state.loadingMore}
-          ><i className="fa fa-refresh" />Show Me More
+            className={classnames('load-more', 'button-block', 'button-green', {
+              hidden: this.props.stubs.length >= this.props.total
+            })}
+            onClick={this.handleLoadMore} disabled={this.state.loadingMore}>
+            <i className="fa fa-refresh" />Show Me More
           </button>
+          <Trips trips={this.props.trips} />
         </div>
       </main>);
   }
 }
+
+Home.propTypes = {
+  dispatch: PropTypes.func,
+  stubs: PropTypes.arrayOf(),
+  total: PropTypes.number,
+  trips: PropTypes.arrayOf()
+};

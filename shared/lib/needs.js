@@ -1,30 +1,41 @@
-// decorator marking necessary resources for a component.
-export default function needs(dependencies) {
+// decorator marking necessary resources for a component
+export default function needs(dependencies, conditional) {
   return function (c) {
     const component = c;
+    component.needs = dependencies;
 
-    // set the static needs of this component
-    component.dependencies = dependencies;
+    const request = props => dependencies.map((need) => {
+      const result = need(props);
+      return result ? props.dispatch(result) : false;
+    });
 
-    // delete the initial state on `componentDidMount`, making sure
-    // we will query the data again next time it is needed
-    const original = component.prototype.componentDidMount;
+    // fetch the needs on component mount
+    const originalComponentDidMount = component.prototype.componentDidMount;
     component.prototype.componentDidMount = function () {
       if (window.state) {
         delete window.state;
       } else {
-        dependencies.forEach((dependency) => {
-          // safer to pass `props` as binding this wouldn't
-          // work if the decorator was written using an arrow function
-          const result = dependency(this.props);
-          return result ? this.props.dispatch(result) : false;
-        });
+        request(this.props);
       }
 
-      // call the original `componentDidMount` function (if there is one)
-      if (original) {
-        original.bind(this)();
+      if (originalComponentDidMount) {
+        originalComponentDidMount.call(this);
       }
     };
+
+    // if e.g. only a URL parameter changes, component might stay the same
+    // in such cases, the pass in a function returning whether the request should be resent
+    if (typeof conditional === 'function') {
+      const originalComponentWillReceiveProps = component.prototype.componentWillReceiveProps;
+      component.prototype.componentWillReceiveProps = function (nextProps) {
+        if (conditional(this.props, nextProps)) {
+          request(nextProps);
+        }
+
+        if (originalComponentWillReceiveProps) {
+          originalComponentWillReceiveProps.call(this);
+        }
+      };
+    }
   };
 }

@@ -28,26 +28,6 @@ export default class PostDetail extends React.Component {
       title: React.PropTypes.string
     })
   }
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShownFull: false,
-      isReadOnNecessary: false
-    };
-  }
-  componentDidUpdate() {
-    this.resolveReadOn();
-  }
-  resolveReadOn() {
-    // execute only on client
-    /* if(process.env.BROWSER){
-      let postBody = document.getElementsByClassName("post-body")[0];
-      if(postBody &&
-       this.state.isReadOnNecessary !== postBody.scrollHeight > postBody.offsetHeight){
-        this.setState({isReadOnNecessary: postBody.scrollHeight > postBody.offsetHeight});
-      }
-    }*/
-  }
   render() {
     return (<div>
       {/* banner, outside of the actual post container (so that it can be full width) */}
@@ -61,15 +41,7 @@ export default class PostDetail extends React.Component {
               <span className="post-details-date">{moment(this.props.post.published).format('MMM DD, YYYY')}</span>
             </span>
           </div>
-          <div
-            className={classnames('post-body', { full: this.state.isShownFull })}
-            dangerouslySetInnerHTML={{ __html: this.props.post.contentHtml }}
-          />
-          {/* <div className={classnames('show-more',
-            {'visible': !this.state.isShownFull && this.state.isReadOnNecessary})}>
-            <a className="button show-more" onClick={() => this.setState({isShownFull: true})}>
-            <i className="fa fa-level-down" />... read on!</a>
-          </div> */}
+          <div className={classnames('post-body')} dangerouslySetInnerHTML={{ __html: this.props.post.contentHtml }} />
         </article>
         <PostGallery
           dispatch={this.props.dispatch}

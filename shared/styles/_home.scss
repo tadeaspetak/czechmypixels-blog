@@ -1,11 +1,22 @@
-@import 'common';
+@import 'utils';
 
-main.home {
+main.home, main.trip {
   .container {
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    .trip-heading {
+      font: 1.5rem/1.4 "Indie Flower","Georgia";
+      margin: 0 0 1rem;
+    }
+
+    .trip-description {
+      margin: 5px auto;
+      text-align: left;
+      width: 300px;
+    }
+
     .post-stubs {
-      margin: 1.5rem auto;
       .post-stub {
-        @include clearfix();
         border-radius: 3px;
         box-shadow: 0 0 4px rgba(0,0,0,.5);
         color: white;
@@ -14,13 +25,15 @@ main.home {
         padding: 0;
         position: relative;
         text-align: left;
+
         // smallest screens
         background-size: 300px 300px;
         background-position: center;
         background-repeat: no-repeat;
         height: 300px;
         width: 300px;
-        // the name and (potentially) description of an album should be shown on a semi-opaque dark background at the bottom of the stub
+
+        // the name, date and potentially trip of a post should be shown on a semi-opaque dark background at the bottom of the stub
         .post-stub-contents {
           position: absolute;
           right: 0;
@@ -30,25 +43,64 @@ main.home {
           padding: 1rem 1rem;
           h2 {
             font-size: 1.1rem;
-            margin: 0 0 .5remq;
+            margin: 0 0 .5rem;
           }
-          .post-stub-body {
-            //display: none;
+          .post-stub-trip {
+            span {
+              cursor: pointer;
+              display: inline-block;
+              font-style: italic;
+              margin-left: 3px;
+              text-decoration: underline;
+
+              &:hover {
+                text-decoration: none;
+              }
+            }
           }
         }
       }
     }
+
+    .trips{
+      ul {
+        margin: 0;
+        padding: 0;
+        li {
+          display: block;
+          list-style-type: none;
+
+          &.home {
+            margin-bottom: 1rem;
+          }
+
+          a {
+            &.current {
+              color: #555;
+              font-weight: bold;
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+
     button.load-more{
       padding: .6rem 0;
     }
   }
 }
 @media(min-width: $screen-small) {
-  main.home {
+  main.home, main.trip {
     .container {
+      width: 420px;
+
+      .trip-description {
+        width: auto;
+      }
+
       .post-stubs {
         @include clearfix();
-        width: 420px;
         .post-stub {
           background-size: 200px 200px;
           float: left;
@@ -58,23 +110,16 @@ main.home {
           &:nth-of-type(2n + 0){
             margin-right: 0;
           }
-          .post-stub-contents {
-            .post-stub-body {
-              display: block;
-              max-height: 40px;
-              overflow: hidden;
-            }
-          }
         }
       }
     }
   }
 }
 @media(min-width: $screen-medium){
-  main.home{
+  main.home, main.trip {
     .container{
+      width: 730px;
       .post-stubs{
-        width: 730px;
         .post-stub{
           background-size: 230px 230px;
           height: 230px;
@@ -97,27 +142,40 @@ main.home {
   }
 }
 @media(min-width: $screen-large) {
-  main.home {
+  main.home, main.trip {
     .container {
-      .post-stubs {
-        width: 1110px;
-        .post-stub {
-          background-size: 350px 350px;
-          height: 350px;
-          margin-right: 30px;
-          width: 350px;
-          &:nth-of-type(2n + 0){
-            margin-right: 30px;
-          }
-          .post-stub-contents {
-            bottom: 10px;
-            .post-stub-body {
-              max-height: none;
-              overflow: auto;
-            }
+      position: relative;
+      width: 940px;
+
+      .trips {
+        position: absolute;
+        right: -130px;
+        text-align: left;
+        top: 60px;
+        width: 110px;
+
+        h4 {
+          margin-bottom: 1rem;
+        }
+
+        ul {
+          li {
+            margin: 0 0 .4rem;
           }
         }
       }
+
+      .post-stubs {
+        .post-stub {
+          background-size: 300px 300px;
+          height: 300px;
+          width: 300px;
+          .post-stub-contents {
+            bottom: 10px;
+          }
+        }
+      }
+
     }
   }
 }
