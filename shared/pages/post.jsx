@@ -50,6 +50,7 @@ export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.onKeyup = this.onKeyup.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     window.addEventListener('keyup', this.onKeyup);
@@ -82,7 +83,8 @@ export default class Post extends React.Component {
     if (e) e.stopPropagation();
     this.getPicture().handleGotoNext();
   }
-  handleClick() {
+  handleClick(e) {
+    e.stopPropagation();
     this.getPicture().close();
   }
   handleFullscreen(e) {
@@ -114,11 +116,11 @@ export default class Post extends React.Component {
           className={classnames('modal-pictures', this.props.params.picture ? 'visible' : 'hidden')}
           onSwipedRight={() => this.handleGotoPrevious()}
           onSwipedLeft={() => this.handleGotoNext()}
-          onClick={() => this.handleClick()}
+          onClick={(e) => { this.handleClick(e); }}
         >
           <a className="picture-previous" onClick={e => this.handleGotoPrevious(e)}><i className="fa fa-angle-left" /></a>
           <a className="picture-next" onClick={e => this.handleGotoNext(e)}><i className="fa fa-angle-right" /></a>
-          <a className="picture-close" onClick={e => this.handleClick(e)}><i className="fa fa-times" /></a>
+          <a className="picture-close" onClick={(e) => { this.handleClick(e); }}><i className="fa fa-times" /></a>
           <a className="picture-fullscreen" onClick={e => this.handleFullscreen(e)}><i className="fa fa-arrows-alt" /></a>
           <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
             {this.props.children ? React.cloneElement(this.props.children, {
