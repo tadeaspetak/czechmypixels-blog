@@ -51,7 +51,7 @@ export function renderPage(store, props) {
 
         ${head.meta.toString()}
 
-        <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="/media/favicon.ico">
         ${head.title.toString()}
         ${process.env.NODE_ENV === 'production' ? '<link rel="stylesheet" type="text/css" href="/screen.css">' : ''}
         <script type="application/javascript">
