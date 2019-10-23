@@ -8,6 +8,6 @@ process.chdir(__dirname);
 delete process.env.BROWSER;
 
 console.log(`CzechMyPixels [Blog] running in ${process.env.NODE_ENV} environment.`); // eslint-disable-line no-console
-const server = require('./server').default.listen(process.env.PORT || 3002, () => {
+const server = require('./server').default.listen(process.env.PORT || 80, () => {
   console.log(`Czech My Pixels [Blog] listening at http://${server.address().address}:${server.address().port}`);  // eslint-disable-line no-console
 });
