@@ -36,7 +36,7 @@ const Utils = {
   },
   absoluteUrl(url) {
     // return `http://${process.env.BROWSER ? document.domain : process.env.HOST}${url.startsWith('/') ? '' : '/'}${url}`;
-    return `https://peaceful-scrubland-51367.herokuapp.com${url.startsWith('/') ? '' : '/'}${url}`;
+    return `http://pixelsapi.tadeaspetak.com${url.startsWith('/') ? '' : '/'}${url}`;
   },
   // get coordinations
   getCoords(element) {
