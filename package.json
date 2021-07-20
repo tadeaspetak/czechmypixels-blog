@@ -14,7 +14,7 @@
   "author": "Tadeas Petak <tadeaspetak@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.12.0",
+    "axios": "^0.21.1",
     "babel-core": "^6.5.2",
     "babel-eslint": "^7.1.1",
     "classnames": "^2.2.5",
