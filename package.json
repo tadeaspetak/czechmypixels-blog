@@ -8,6 +8,9 @@
     "dev": "PORT=3002 NODE_ENV=dev node --harmony .",
     "start": "NODE_ENV=production node --harmony ."
   },
+  "engines": {
+    "node": "8.x"
+  },
   "author": "Tadeas Petak <tadeaspetak@gmail.com>",
   "license": "ISC",
   "dependencies": {
